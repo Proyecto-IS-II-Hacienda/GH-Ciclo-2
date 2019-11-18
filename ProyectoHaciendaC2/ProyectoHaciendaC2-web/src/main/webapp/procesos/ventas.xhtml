@@ -2,16 +2,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-          
-      xmlns:p="http://primefaces.org/ui">
+
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+
+
+
         <title>Ventas</title>
     </h:head>
     <h:body>
-        <h:form>
-            <p:panel>
-                F13
-            </p:panel>
+        <h:form>              
+            <div class="ui-g">
+                <div class="ui-g-2">
+                    <p:outputLabel value="Nueva Compra" id="newVenta"/>
+                </div>
+                <div class="ui-g-10">   
+                    <p:panel id="nuevaVenta" header="Ingreso de Compra" toggleable="true" toggleOrientation="horizontal" collapsed="true">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <p:commandButton icon="ui-icon-plus" value="Agregar un producto" action="#{ventaMB.nuevaVenta()}" update="nuevaVenta"></p:commandButton> 
+                            <p:dataTable id="ventasReg" value="#{ventaMB.productosComprados}" var="itr">
+                                <p:column headerText="Producto">
+                                    <p:selectOneMenu value="#{itr.productos}"  converter="omnifaces.SelectItemsConverter">
+                                        <f:selectItems value="#{ventaMB.productos}" var="prod" itemLabel="#{prod.productos.nombre}" itemValue="#{prod.productos}"></f:selectItems>
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column headerText="Cantidad">
+                                    <p:spinner min="1" max="#{itr.cantidad}"></p:spinner>
+                                </p:column>
+                                
+                            </p:dataTable>
+                            <f:facet name="footer">
+                                <p:commandButton value="Vender" action="#{ventaMB.vender()}"></p:commandButton>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:panel>
+                </div>
+            </div>
         </h:form>
     </h:body>
 </html>

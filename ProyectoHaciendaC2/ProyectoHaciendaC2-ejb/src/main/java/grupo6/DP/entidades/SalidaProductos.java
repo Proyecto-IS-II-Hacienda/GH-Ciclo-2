@@ -41,16 +41,17 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "SalidaProductos.findByFechaSalida", query = "SELECT s FROM SalidaProductos s WHERE s.fechaSalida = :fechaSalida")})
 public class SalidaProductos implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CANTIDAD")
+    private double cantidad;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_SALIDA_PROD")
     private Integer idSalidaProd;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CANTIDAD")
-    private BigInteger cantidad;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_SALIDA")
@@ -72,7 +73,7 @@ public class SalidaProductos implements Serializable {
         this.idSalidaProd = idSalidaProd;
     }
 
-    public SalidaProductos(Integer idSalidaProd, BigInteger cantidad, Date fechaSalida) {
+    public SalidaProductos(Integer idSalidaProd, float cantidad, Date fechaSalida) {
         this.idSalidaProd = idSalidaProd;
         this.cantidad = cantidad;
         this.fechaSalida = fechaSalida;
@@ -86,13 +87,6 @@ public class SalidaProductos implements Serializable {
         this.idSalidaProd = idSalidaProd;
     }
 
-    public BigInteger getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(BigInteger cantidad) {
-        this.cantidad = cantidad;
-    }
 
     public Date getFechaSalida() {
         return fechaSalida;
@@ -142,6 +136,14 @@ public class SalidaProductos implements Serializable {
     @Override
     public String toString() {
         return "grupo6.DP.SalidaProductos[ idSalidaProd=" + idSalidaProd + " ]";
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
     }
     
 }
