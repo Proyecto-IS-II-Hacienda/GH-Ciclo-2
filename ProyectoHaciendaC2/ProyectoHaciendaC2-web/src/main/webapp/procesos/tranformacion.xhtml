@@ -14,11 +14,11 @@
                 <p:messages showDetail="true" showSummary="true">
                     <p:autoUpdate></p:autoUpdate>
                 </p:messages>
-                <h:form>
-                    <h:panelGrid columns="1" id="panelCentral" style="width: 100%">
-                        <p:commandButton value="Transformar Vegetal" action=""></p:commandButton>
-                    </h:panelGrid>
-                </h:form>
+                <h:panelGrid columns="1" id="panelCentral" style="width: 100%">
+                        <p:commandButton value="Transformar Vegetal" action="#{transformacionManagedBean.irAPlanta()}"></p:commandButton>
+                        <Br/>
+                        <p:commandButton value="Transformar Animal" action="#{transformacionManagedBean.irAAnimal()}"></p:commandButton>
+                </h:panelGrid>
             </ui:define>
         </ui:composition>
     </h:body>

@@ -65,6 +65,7 @@ public class Plantas implements Serializable {
     private List<ProcesamientoPlanta> procesamientoPlantaList;
 
     public Plantas() {
+        this.plantasPK = new PlantasPK();
     }
 
     public Plantas(PlantasPK plantasPK) {

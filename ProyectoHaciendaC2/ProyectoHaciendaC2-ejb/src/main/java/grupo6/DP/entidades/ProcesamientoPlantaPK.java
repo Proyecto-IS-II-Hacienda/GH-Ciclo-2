@@ -39,6 +39,7 @@ public class ProcesamientoPlantaPK implements Serializable {
     private String codProducto;
 
     public ProcesamientoPlantaPK() {
+        fecha = new Date();
     }
 
     public ProcesamientoPlantaPK(BigInteger numeroProcesamiento, Date fecha, String codProducto) {
@@ -103,5 +104,5 @@ public class ProcesamientoPlantaPK implements Serializable {
     public String toString() {
         return "grupo6.DP.ProcesamientoPlantaPK[ numeroProcesamiento=" + numeroProcesamiento + ", fecha=" + fecha + ", codProducto=" + codProducto + " ]";
     }
-    
+
 }

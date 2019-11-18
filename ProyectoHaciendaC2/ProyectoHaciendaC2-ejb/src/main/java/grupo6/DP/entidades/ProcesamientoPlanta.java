@@ -73,6 +73,8 @@ public class ProcesamientoPlanta implements Serializable {
     private Productos productos;
 
     public ProcesamientoPlanta() {
+        this.procesamientoPlantaPK = new ProcesamientoPlantaPK();
+        this.plantas = new Plantas();
     }
 
     public ProcesamientoPlanta(ProcesamientoPlantaPK procesamientoPlantaPK) {
@@ -171,5 +173,5 @@ public class ProcesamientoPlanta implements Serializable {
     public String toString() {
         return "grupo6.DP.ProcesamientoPlanta[ procesamientoPlantaPK=" + procesamientoPlantaPK + " ]";
     }
-    
+
 }
