@@ -5,7 +5,7 @@
  */
 package grupo6.MD.sesiones;
 
-import grupo6.DP.entidades.Logs;
+import grupo6.DP.entidades.Planta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Albert
  */
 @Stateless
-public class LogsFacade extends AbstractFacade<Logs> implements LogsFacadeLocal {
+public class PlantaFacade extends AbstractFacade<Planta> implements PlantaFacadeLocal {
 
     @PersistenceContext(unitName = "grupo6_ProyectoHaciendaC2-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class LogsFacade extends AbstractFacade<Logs> implements LogsFacadeLocal 
         return em;
     }
 
-    public LogsFacade() {
-        super(Logs.class);
+    public PlantaFacade() {
+        super(Planta.class);
     }
     
 }

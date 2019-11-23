@@ -5,7 +5,7 @@
  */
 package grupo6.MD.sesiones;
 
-import grupo6.DP.entidades.Logs;
+import grupo6.DP.entidades.Producto;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author Albert
  */
 @Local
-public interface LogsFacadeLocal {
+public interface ProductoFacadeLocal {
 
-    void create(Logs logs);
+    void create(Producto producto);
 
-    void edit(Logs logs);
+    void edit(Producto producto);
 
-    void remove(Logs logs);
+    void remove(Producto producto);
 
-    Logs find(Object id);
+    Producto find(Object id);
 
-    List<Logs> findAll();
+    List<Producto> findAll();
 
-    List<Logs> findRange(int[] range);
+    List<Producto> findRange(int[] range);
 
     int count();
     

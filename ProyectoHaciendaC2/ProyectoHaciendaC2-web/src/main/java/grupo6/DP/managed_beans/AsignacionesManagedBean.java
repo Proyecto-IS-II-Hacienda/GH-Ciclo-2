@@ -5,16 +5,17 @@
  */
 package grupo6.DP.managed_beans;
 
-import grupo6.DP.entidades.Animales;
-import grupo6.DP.entidades.Areas;
-import grupo6.DP.entidades.DistribucionesAnimales;
-import grupo6.DP.entidades.DistribucionesPlantas;
-import grupo6.DP.entidades.Plantas;
-import grupo6.MD.sesiones.AnimalesFacadeLocal;
-import grupo6.MD.sesiones.AreasFacadeLocal;
-import grupo6.MD.sesiones.DistribucionesAnimalesFacadeLocal;
-import grupo6.MD.sesiones.DistribucionesPlantasFacadeLocal;
-import grupo6.MD.sesiones.PlantasFacadeLocal;
+import grupo6.DP.entidades.Animal;
+import grupo6.DP.entidades.Area;
+import grupo6.DP.entidades.Distribucionanimal;
+import grupo6.DP.entidades.DistribucionanimalPK;
+import grupo6.DP.entidades.Distribucionplanta;
+import grupo6.DP.entidades.Planta;
+import grupo6.MD.sesiones.AnimalFacadeLocal;
+import grupo6.MD.sesiones.AreaFacadeLocal;
+import grupo6.MD.sesiones.DistribucionanimalFacadeLocal;
+import grupo6.MD.sesiones.DistribucionplantaFacadeLocal;
+import grupo6.MD.sesiones.PlantaFacadeLocal;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -33,113 +34,123 @@ import org.primefaces.event.SelectEvent;
 @Named(value = "asignacionesManagedBean")
 @ViewScoped
 public class AsignacionesManagedBean implements Serializable{
-    private List<Animales> animalesList;
-    private List<DistribucionesAnimales> distribucionesAnimalesList;
-    private List<Plantas> plantasList;
-    private List<DistribucionesPlantas> distribucionesPlantasList;
-    private List<Areas> areasList;
+    private List<Animal> animalesList;
+    private List<Distribucionanimal> distribucionesAnimalesList;
+    private List<Planta> plantasList;
+    private List<Distribucionplanta> distribucionesPlantasList;
+    private List<Area> areasList;
+    private DistribucionanimalPK animalPK; 
 
- 
-
-   
-       
+    
     @EJB
-    private AnimalesFacadeLocal animalesFacadeLocal;
-    private Animales animal;
+    private AnimalFacadeLocal animalesFacadeLocal;
+    private Animal animal;
     @EJB
-    private DistribucionesAnimalesFacadeLocal distribucionesAnimalesFacadeLocal;
-    private DistribucionesAnimales distribucionAnimal;
+    private DistribucionanimalFacadeLocal distribucionesAnimalesFacadeLocal;
+    private Distribucionanimal distribucionAnimal;
     @EJB
-    private PlantasFacadeLocal plantasFacadeLocal;
-    private Plantas planta;
+    private PlantaFacadeLocal plantasFacadeLocal;
+    private Planta planta;
     @EJB
-    private DistribucionesPlantasFacadeLocal distribucionesPlantasFacadeLocal;
-    private DistribucionesPlantas distribucionPlanta;
-    private Areas area;
+    private DistribucionplantaFacadeLocal distribucionesPlantasFacadeLocal;
+    private Distribucionplanta distribucionPlanta;
+    private Area area;
     @EJB
-    private AreasFacadeLocal areasFacadeLocal;
+    private AreaFacadeLocal areasFacadeLocal;
     private boolean esNuevo;
     private boolean Seleccion;
+    
 
-    public List<Animales> getAnimalesList() {
+    public List<Animal> getAnimalesList() {
         return animalesList;
     }
 
-    public void setAnimalesList(List<Animales> animalesList) {
+    public void setAnimalesList(List<Animal> animalesList) {
         this.animalesList = animalesList;
     }
 
-    public List<DistribucionesAnimales> getDistribucionesAnimalesList() {
+    public List<Distribucionanimal> getDistribucionesAnimalesList() {
         return distribucionesAnimalesList;
     }
 
-    public void setDistribucionesAnimalesList(List<DistribucionesAnimales> distribucionesAnimalesList) {
+    public void setDistribucionesAnimalesList(List<Distribucionanimal> distribucionesAnimalesList) {
         this.distribucionesAnimalesList = distribucionesAnimalesList;
     }
 
-    public List<Plantas> getPlantasList() {
+    public List<Planta> getPlantasList() {
         return plantasList;
     }
 
-    public void setPlantasList(List<Plantas> plantasList) {
+    public void setPlantasList(List<Planta> plantasList) {
         this.plantasList = plantasList;
     }
 
-    public List<DistribucionesPlantas> getDistribucionesPlantasList() {
+    public List<Distribucionplanta> getDistribucionesPlantasList() {
         return distribucionesPlantasList;
     }
 
-    public void setDistribucionesPlantasList(List<DistribucionesPlantas> distribucionesPlantasList) {
+    public void setDistribucionesPlantasList(List<Distribucionplanta> distribucionesPlantasList) {
         this.distribucionesPlantasList = distribucionesPlantasList;
     }
 
-    public Animales getAnimal() {
-        return animal;
-    }
-
-    public void setAnimal(Animales animal) {
-        this.animal = animal;
-    }
-
-    public DistribucionesAnimales getDistribucionAnimal() {
-        return distribucionAnimal;
-    }
-
-    public void setDistribucionAnimal(DistribucionesAnimales distribucionAnimal) {
-        this.distribucionAnimal = distribucionAnimal;
-    }
-
-    public Plantas getPlanta() {
-        return planta;
-    }
-
-    public void setPlanta(Plantas planta) {
-        this.planta = planta;
-    }
-
-    public DistribucionesPlantas getDistribucionPlanta() {
-        return distribucionPlanta;
-    }
-
-    public void setDistribucionPlanta(DistribucionesPlantas distribucionPlanta) {
-        this.distribucionPlanta = distribucionPlanta;
-    }
-    
-       public List<Areas> getAreasList() {
+    public List<Area> getAreasList() {
         return areasList;
     }
 
-    public void setAreasList(List<Areas> areasList) {
+    public void setAreasList(List<Area> areasList) {
         this.areasList = areasList;
     }
 
-    public Areas getArea() {
+    public Animal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
+
+    public Distribucionanimal getDistribucionAnimal() {
+        return distribucionAnimal;
+    }
+
+    public void setDistribucionAnimal(Distribucionanimal distribucionAnimal) {
+        this.distribucionAnimal = distribucionAnimal;
+    }
+
+    public Planta getPlanta() {
+        return planta;
+    }
+
+    public void setPlanta(Planta planta) {
+        this.planta = planta;
+    }
+
+    public Distribucionplanta getDistribucionPlanta() {
+        return distribucionPlanta;
+    }
+
+    public void setDistribucionPlanta(Distribucionplanta distribucionPlanta) {
+        this.distribucionPlanta = distribucionPlanta;
+    }
+
+    public Area getArea() {
         return area;
     }
 
-    public void setArea(Areas area) {
+    public void setArea(Area area) {
         this.area = area;
     }
+
+    public DistribucionanimalPK getAnimalPK() {
+        return animalPK;
+    }
+
+    public void setAnimalPK(DistribucionanimalPK animalPK) {
+        this.animalPK = animalPK;
+    }
+    
+    
+
     
 
     public boolean isEsNuevo() {
@@ -183,19 +194,26 @@ public class AsignacionesManagedBean implements Serializable{
     
     
     public void nuevo(){
-        if(Seleccion)
-            distribucionAnimal=new DistribucionesAnimales();
+        if(Seleccion){
+             distribucionAnimal=new Distribucionanimal();
+             animalPK=new DistribucionanimalPK();
+        }   
         else
-            distribucionPlanta=new DistribucionesPlantas();
+            distribucionPlanta=new Distribucionplanta();
         esNuevo=true;
     }
     
     public void grabar(){
         try{
             if(esNuevo){
-                if(Seleccion)
+                if(Seleccion){
+                    animalPK.setIdanimal(distribucionAnimal.getAnimal().getAnimalPK().getIdanimal());
+                    animalPK.setNombrecientifico(distribucionAnimal.getAnimal().getAnimalPK().getNombrecientifico());
+                    animalPK.setNumeroarea(distribucionAnimal.getArea().getAreaPK().getNumeroarea());
+                    animalPK.setIdtipoarea(distribucionAnimal.getArea().getAreaPK().getIdtipoarea());
+                    distribucionAnimal.setDistribucionanimalPK(animalPK);
                     distribucionesAnimalesFacadeLocal.create(distribucionAnimal);
-                else
+                }else
                     distribucionesPlantasFacadeLocal.create(distribucionPlanta);
             }else{
                 if(Seleccion)
@@ -204,10 +222,12 @@ public class AsignacionesManagedBean implements Serializable{
                     distribucionesPlantasFacadeLocal.edit(distribucionPlanta);
             }
         }catch (Exception e){
-            
+            System.out.println(e.getMessage());
         }finally{
-            if(Seleccion)
+            if(Seleccion){
                 distribucionAnimal=null;
+                animalPK=null;
+            }           
             else
                 distribucionPlanta=null;
             esNuevo=false;
@@ -236,9 +256,9 @@ public class AsignacionesManagedBean implements Serializable{
     
     public void recibirArea(SelectEvent e){
         if(Seleccion)
-            distribucionAnimal.setAreas((Areas) e.getObject());
+            distribucionAnimal.setArea((Area) e.getObject());
         else
-            distribucionPlanta.setAreas((Areas) e.getObject());
+            distribucionPlanta.setArea((Area) e.getObject());
     } 
     
     
@@ -255,6 +275,6 @@ public class AsignacionesManagedBean implements Serializable{
     
     
     public void recibirAnimal(SelectEvent e){
-            distribucionAnimal.setAnimales((Animales) e.getObject());
+            distribucionAnimal.setAnimal((Animal) e.getObject());
     }        
 }

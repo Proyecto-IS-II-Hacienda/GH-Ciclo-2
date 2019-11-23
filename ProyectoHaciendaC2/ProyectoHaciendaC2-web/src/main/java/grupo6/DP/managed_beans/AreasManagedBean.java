@@ -5,8 +5,8 @@
  */
 package grupo6.DP.managed_beans;
 
-import grupo6.DP.entidades.Areas;
-import grupo6.MD.sesiones.AreasFacadeLocal;
+import grupo6.DP.entidades.Area;
+import grupo6.MD.sesiones.AreaFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,8 +23,8 @@ import org.primefaces.PrimeFaces;
 @ViewScoped
 public class AreasManagedBean implements Serializable{
     @EJB
-    private AreasFacadeLocal areaFacadeLocal;
-    private List<Areas> areasList;
+    private AreaFacadeLocal areaFacadeLocal;
+    private List<Area> areasList;
 
     /**
      * Creates a new instance of AreasManagedBean
@@ -37,16 +37,16 @@ public class AreasManagedBean implements Serializable{
         areasList=areaFacadeLocal.findAll();
     }
 
-    public List<Areas> getAreasList() {
+    public List<Area> getAreasList() {
         return areasList;
     }
 
-    public void setAreasList(List<Areas> areasList) {
+    public void setAreasList(List<Area> areasList) {
         this.areasList = areasList;
     }
     
 
-     public void seleccionar(Areas area){
+     public void seleccionar(Area area){
         PrimeFaces.current().dialog().closeDynamic(area);
     }
     

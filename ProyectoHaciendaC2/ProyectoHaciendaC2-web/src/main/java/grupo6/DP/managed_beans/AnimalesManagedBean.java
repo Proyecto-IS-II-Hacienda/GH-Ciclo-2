@@ -5,8 +5,8 @@
  */
 package grupo6.DP.managed_beans;
 
-import grupo6.DP.entidades.Animales;
-import grupo6.MD.sesiones.AnimalesFacadeLocal;
+import grupo6.DP.entidades.Animal;
+import grupo6.MD.sesiones.AnimalFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,8 +23,8 @@ import org.primefaces.PrimeFaces;
 @ViewScoped
 public class AnimalesManagedBean implements Serializable {
     @EJB
-    private AnimalesFacadeLocal animalesFacadeLocal;
-    private List <Animales> animalesList;
+    private AnimalFacadeLocal animalesFacadeLocal;
+    private List <Animal> animalesList;
     
 
     /**
@@ -39,15 +39,15 @@ public class AnimalesManagedBean implements Serializable {
         animalesList=animalesFacadeLocal.findAll();
     }
 
-    public List<Animales> getAnimalesList() {
+    public List<Animal> getAnimalesList() {
         return animalesList;
     }
 
-    public void setAnimalesList(List<Animales> animalesList) {
+    public void setAnimalesList(List<Animal> animalesList) {
         this.animalesList = animalesList;
     }
     
-     public void seleccionar(Animales animal){
+     public void seleccionar(Animal animal){
         PrimeFaces.current().dialog().closeDynamic(animal);
     }
     

@@ -10,13 +10,13 @@
          <h:form>
              <p:dataTable value="#{animalesManagedBean.animalesList}" var="ani">
                 <p:column headerText="ID del animal">
-                    <h:outputLabel value="#{ani.animalesPK.idAnimal}"></h:outputLabel>
+                    <h:outputLabel value="#{ani.animalPK.idanimal}"></h:outputLabel>
                 </p:column>
                 <p:column headerText="Nombre Cientifico">
-                    <h:outputLabel value="#{ani.animalesPK.nombreCientifico}"></h:outputLabel>
+                    <h:outputLabel value="#{ani.animalPK.nombrecientifico}"></h:outputLabel>
                 </p:column>
                 <p:column headerText="Nombre Comun">
-                    <h:outputLabel value="#{ani.tiposDeAnimales.tiposDeAnimalesPK.nombreComun}"></h:outputLabel>
+                    <h:outputLabel value="#{ani.tipodeanimal.tipodeanimalPK.nombrecomun}"></h:outputLabel>
                 </p:column>
                 <p:column headerText="Seleccionar">
                     <p:commandButton icon="ui-icon-check" action="#{animalesManagedBean.seleccionar(ani)}"></p:commandButton>

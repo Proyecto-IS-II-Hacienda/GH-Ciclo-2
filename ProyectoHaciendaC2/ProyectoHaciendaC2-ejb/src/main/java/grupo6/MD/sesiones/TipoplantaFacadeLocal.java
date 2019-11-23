@@ -5,7 +5,7 @@
  */
 package grupo6.MD.sesiones;
 
-import grupo6.DP.entidades.Logs;
+import grupo6.DP.entidades.Tipoplanta;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author Albert
  */
 @Local
-public interface LogsFacadeLocal {
+public interface TipoplantaFacadeLocal {
 
-    void create(Logs logs);
+    void create(Tipoplanta tipoplanta);
 
-    void edit(Logs logs);
+    void edit(Tipoplanta tipoplanta);
 
-    void remove(Logs logs);
+    void remove(Tipoplanta tipoplanta);
 
-    Logs find(Object id);
+    Tipoplanta find(Object id);
 
-    List<Logs> findAll();
+    List<Tipoplanta> findAll();
 
-    List<Logs> findRange(int[] range);
+    List<Tipoplanta> findRange(int[] range);
 
     int count();
     
