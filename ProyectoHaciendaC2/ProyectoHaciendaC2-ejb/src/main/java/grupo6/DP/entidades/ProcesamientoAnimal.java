@@ -67,6 +67,7 @@ public class ProcesamientoAnimal implements Serializable {
     private Productos productos;
 
     public ProcesamientoAnimal() {
+        procesamientoAnimalPK = new ProcesamientoAnimalPK();
     }
 
     public ProcesamientoAnimal(ProcesamientoAnimalPK procesamientoAnimalPK) {
