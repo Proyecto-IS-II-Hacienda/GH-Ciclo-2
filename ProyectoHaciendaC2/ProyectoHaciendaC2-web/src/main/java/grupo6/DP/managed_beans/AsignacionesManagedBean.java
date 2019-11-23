@@ -15,7 +15,6 @@ import grupo6.MD.sesiones.AreasFacadeLocal;
 import grupo6.MD.sesiones.DistribucionesAnimalesFacadeLocal;
 import grupo6.MD.sesiones.DistribucionesPlantasFacadeLocal;
 import grupo6.MD.sesiones.PlantasFacadeLocal;
-import grupo6.utilitarios.Crud;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -39,19 +38,25 @@ public class AsignacionesManagedBean implements Serializable{
     private List<Plantas> plantasList;
     private List<DistribucionesPlantas> distribucionesPlantasList;
     private List<Areas> areasList;
+
+ 
+
    
-    
-    
+       
     @EJB
     private AnimalesFacadeLocal animalesFacadeLocal;
     private Animales animal;
+    @EJB
     private DistribucionesAnimalesFacadeLocal distribucionesAnimalesFacadeLocal;
     private DistribucionesAnimales distribucionAnimal;
+    @EJB
     private PlantasFacadeLocal plantasFacadeLocal;
     private Plantas planta;
+    @EJB
     private DistribucionesPlantasFacadeLocal distribucionesPlantasFacadeLocal;
     private DistribucionesPlantas distribucionPlanta;
     private Areas area;
+    @EJB
     private AreasFacadeLocal areasFacadeLocal;
     private boolean esNuevo;
     private boolean Seleccion;
@@ -119,6 +124,23 @@ public class AsignacionesManagedBean implements Serializable{
     public void setDistribucionPlanta(DistribucionesPlantas distribucionPlanta) {
         this.distribucionPlanta = distribucionPlanta;
     }
+    
+       public List<Areas> getAreasList() {
+        return areasList;
+    }
+
+    public void setAreasList(List<Areas> areasList) {
+        this.areasList = areasList;
+    }
+
+    public Areas getArea() {
+        return area;
+    }
+
+    public void setArea(Areas area) {
+        this.area = area;
+    }
+    
 
     public boolean isEsNuevo() {
         return esNuevo;
