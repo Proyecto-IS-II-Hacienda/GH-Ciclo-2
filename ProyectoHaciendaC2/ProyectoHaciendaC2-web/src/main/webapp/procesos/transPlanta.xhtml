@@ -19,27 +19,27 @@
                     <p:panel header="Listado de Controles de tranformación de Plantas" rendered="#{transPlantaManagedBean.procesamientoPlanta==null}">
                         <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{transPlantaManagedBean.nuevo()}" update="panelCentral"></p:commandButton>
                         <br/>
-                        <p:dataTable id="dtPlantas" value="#{transPlantaManagedBean.listaProcesamientoPlantas}" var="transplan" paginator="true" rows="5">
-                            <p:column headerText="NÚMERO DE PROCESAMIENTO" style="text-align: center" sortBy="#{transplan.procesamientoPlantaPK.numeroProcesamiento}" filterBy="#{transplan.procesamientoPlantaPK.numeroProcesamiento}" filterMatchMode="contains" width="100">
-                                <h:outputLabel value="#{transplan.procesamientoPlantaPK.numeroProcesamiento}"></h:outputLabel>
+                        <p:dataTable id="dtPlantas" value="#{transPlantaManagedBean.listaProcesamientoPlanta}" var="transplan" paginator="true" rows="5">
+                            <p:column headerText="NÚMERO DE PROCESAMIENTO" style="text-align: center" sortBy="#{transplan.procesamientoplantaPK.numeroprocesamiento}" filterBy="#{transplan.procesamientoplantaPK.numeroprocesamiento}" filterMatchMode="contains" width="100">
+                                <h:outputLabel value="#{transplan.procesamientoplantaPK.numeroprocesamiento}"></h:outputLabel>
                             </p:column>
 
-                            <p:column headerText="FECHA DE INGRESO" style="text-align: center" sortBy="#{transplan.procesamientoPlantaPK.fecha}" filterBy="#{transplan.procesamientoPlantaPK.fecha}" filterMatchMode="contains">
-                                <h:outputLabel value="#{transplan.procesamientoPlantaPK.fecha}" style="text-transform: uppercase">
+                            <p:column headerText="FECHA DE INGRESO" style="text-align: center" sortBy="#{transplan.procesamientoplantaPK.fecha}" filterBy="#{transplan.procesamientoplantaPK.fecha}" filterMatchMode="contains">
+                                <h:outputLabel value="#{transplan.procesamientoplantaPK.fecha}" style="text-transform: uppercase">
                                     <f:convertDateTime pattern="dd/MMM/YYYY"></f:convertDateTime>
                                 </h:outputLabel>
                             </p:column>
 
-                            <p:column headerText="ID PLANTA" style="text-align: center" sortBy="#{transplan.plantas.plantasPK.idPlanta}" filterBy="#{transplan.plantas.plantasPK.idPlanta}" filterMatchMode="contains" width="100">
-                                <h:outputLabel value="#{transplan.plantas.plantasPK.idPlanta}"></h:outputLabel>
+                            <p:column headerText="ID PLANTA" style="text-align: center" sortBy="#{transplan.planta.plantaPK.idplanta}" filterBy="#{transplan.planta.plantaPK.idplanta}" filterMatchMode="contains" width="100">
+                                <h:outputLabel value="#{transplan.planta.plantaPK.idplanta}"></h:outputLabel>
                             </p:column>
 
-                            <p:column headerText="NOMBRE CIENTÍFICO" style="text-align: center" sortBy="#{transplan.plantas.plantasPK.nombreCientifico}" filterBy="#{transplan.plantas.plantasPK.nombreCientifico}" filterMatchMode="contains" width="100">
-                                <h:outputLabel value="#{transplan.plantas.plantasPK.nombreCientifico}"></h:outputLabel>
+                            <p:column headerText="NOMBRE CIENTÍFICO" style="text-align: center" sortBy="#{transplan.planta.plantaPK.nombrecientifico}" filterBy="#{transplan.planta.plantaPK.nombrecientifico}" filterMatchMode="contains" width="100">
+                                <h:outputLabel value="#{transplan.planta.plantaPK.nombrecientifico}"></h:outputLabel>
                             </p:column>
 
-                            <p:column headerText="CÓDIGO DEL PRODUCTO" style="text-align: center" sortBy="#{transplan.procesamientoPlantaPK.codProducto}" filterBy="#{transplan.procesamientoPlantaPK.codProducto}" filterMatchMode="contains" width="100">
-                                <h:outputLabel value="#{transplan.procesamientoPlantaPK.codProducto}"></h:outputLabel>
+                            <p:column headerText="CÓDIGO DEL PRODUCTO" style="text-align: center" sortBy="#{transplan.procesamientoplantaPK.codProducto}" filterBy="#{transplan.procesamientoplantaPK.codProducto}" filterMatchMode="contains" width="100">
+                                <h:outputLabel value="#{transplan.procesamientoplantaPK.codProducto}"></h:outputLabel>
                             </p:column>
 
                             <p:column headerText="MORTAL" style="text-align: center" sortBy="#{transplan.mortal}" filterBy="#{transplan.mortal}" filterMatchMode="contains" width="80">
@@ -54,8 +54,8 @@
                                 <h:outputLabel value="#{transplan.unidad}"></h:outputLabel>
                             </p:column>
 
-                            <p:column headerText="FECHA DE CADUCIDAD" style="text-align: center" sortBy="#{transplan.fechaCaducidad}" filterBy="#{transplan.fechaCaducidad}" filterMatchMode="contains">
-                                <h:outputLabel value="#{transplan.fechaCaducidad}" style="text-transform: uppercase">
+                            <p:column headerText="FECHA DE CADUCIDAD" style="text-align: center" sortBy="#{transplan.fechacaducidad}" filterBy="#{transplan.fechacaducidad}" filterMatchMode="contains">
+                                <h:outputLabel value="#{transplan.fechacaducidad}" style="text-transform: uppercase">
                                     <f:convertDateTime pattern="dd/MMM/YYYY"></f:convertDateTime>
                                 </h:outputLabel>
                             </p:column>
@@ -75,41 +75,35 @@
                     <p:panel header="#{transPlantaManagedBean.esNuevo ? 'Ingreso ' : 'Modificación'} de Control de Transformación de Plantas" rendered="#{transPlantaManagedBean.procesamientoPlanta!=null}">
                         <h:panelGrid columns="3">
                             <p:outputLabel for="numProcesamiento" value="Número de Pocesamiento: "></p:outputLabel>
-                            <p:inputNumber id="numProcesamiento" value="#{transPlantaManagedBean.procesamientoPlanta.procesamientoPlantaPK.numeroProcesamiento}" decimalPlaces="0" minValue="1" required="true" requiredMessage="Campo Obligatorio"></p:inputNumber>
+                            <p:inputNumber id="numProcesamiento" value="#{transPlantaManagedBean.procesamientoPlanta.procesamientoplantaPK.numeroprocesamiento}" decimalPlaces="0" minValue="1" required="true" requiredMessage="Campo Obligatorio"></p:inputNumber>
                             <p:message for="numProcesamiento"></p:message>
                             
-                            <p:outputLabel for="comIDPlanta" value="ID de Planta: "></p:outputLabel>
-                            <p:selectOneMenu id="comIDPlanta" value="#{transPlantaManagedBean.procesamientoPlanta.plantas.plantasPK}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Campo Obligatorio">
-                                <f:selectItems value="#{transPlantaManagedBean.listaPlantas}" var="listid" itemLabel="#{listid.plantasPK.idPlanta}" itemValue="#{listid.plantasPK}"></f:selectItems>
-                            </p:selectOneMenu>
-                            <p:message for="comIDPlanta"></p:message>
-                            
                             <p:outputLabel for="comNomCient" value="Nombre Científico de Planta: "></p:outputLabel>
-                            <p:selectOneMenu id="comNomCient" value="#{transPlantaManagedBean.procesamientoPlanta.plantas.plantasPK.nombreCientifico}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Campo Obligatorio">
-                                <f:selectItems value="#{transPlantaManagedBean.listaPlantas}" var="listnom" itemLabel="#{listnom.plantasPK.nombreCientifico}" itemValue="#{listnom}"></f:selectItems>
+                            <p:selectOneMenu id="comNomCient" value="#{transPlantaManagedBean.procesamientoPlanta.planta}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Campo Obligatorio">
+                                <f:selectItems value="#{transPlantaManagedBean.listaPlanta}" var="listnom" itemLabel="#{listnom.plantaPK.nombrecientifico}" itemValue="#{listnom}"></f:selectItems>
                             </p:selectOneMenu>
                             <p:message for="comNomCient"></p:message>
                             
                             <p:outputLabel for="comCodProd" value="Tipo de producto a fabricar: "></p:outputLabel>
-                            <p:selectOneMenu id="comCodProd" value="#{transPlantaManagedBean.procesamientoPlanta.productos.codProducto}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Campo Obligatorio">
-                                <f:selectItems value="#{transPlantaManagedBean.listaProductos}" var="list" itemLabel="#{list.nombre}" itemValue="#{list}"></f:selectItems>
+                            <p:selectOneMenu id="comCodProd" value="#{transPlantaManagedBean.procesamientoPlanta.procesamientoplantaPK.codProducto}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Campo Obligatorio">
+                                <f:selectItems value="#{transPlantaManagedBean.listaProducto}" var="list" itemLabel="#{list.nombre}" itemValue="#{list.codProducto}"></f:selectItems>
                             </p:selectOneMenu>
                             <p:message for="comCodProd"></p:message>
                             
                             <p:outputLabel for="numMortal" value="Proceso Mortal?: "></p:outputLabel>
-                            <p:inputNumber id="numMortal" value="#{transPlantaManagedBean.procesamientoPlanta.mortal}" decimalPlaces="0" minValue="0" maxValue="1" required="true" requiredMessage="Campo Obligatorio"></p:inputNumber>
+                            <p:inputNumber id="numMortal" value="#{transPlantaManagedBean.procesamientoPlanta.mortal}" maxlength="1" decimalPlaces="0" minValue="0" maxValue="1" required="true" requiredMessage="Campo Obligatorio"></p:inputNumber>
                             <p:message for="numMortal"></p:message>
                             
                             <p:outputLabel for="numCantidad" value="Cantidad: "></p:outputLabel>
-                            <p:inputNumber id="numCantidad" value="#{transPlantaManagedBean.procesamientoPlanta.cantidad}" decimalPlaces="0" minValue="1" required="true" requiredMessage="Campo Obligatorio"></p:inputNumber>
+                            <p:inputNumber id="numCantidad" value="#{transPlantaManagedBean.procesamientoPlanta.cantidad}" maxlength="3" decimalPlaces="0" minValue="1" required="true" requiredMessage="Campo Obligatorio"></p:inputNumber>
                             <p:message for="numCantidad"></p:message>
                             
                             <p:outputLabel for="txtUnidad" value="Unidad de Medida: "></p:outputLabel>
-                            <p:inputText id="txtUnidad" value="#{transPlantaManagedBean.procesamientoPlanta.unidad}" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
+                            <p:inputText id="txtUnidad" value="#{transPlantaManagedBean.procesamientoPlanta.unidad}" maxlength="5" required="true" requiredMessage="Campo Obligatorio"></p:inputText>
                             <p:message for="txtUnidad"></p:message>
                             
                             <p:outputLabel for="calFecha" value="Fecha de Caducidad: "></p:outputLabel>
-                            <p:calendar id="calFecha" value="#{transPlantaManagedBean.procesamientoPlanta.fechaCaducidad}" required="true" requiredMessage="Campo Obligatorio"></p:calendar>
+                            <p:calendar id="calFecha" value="#{transPlantaManagedBean.procesamientoPlanta.fechacaducidad}" mindate="" required="true" requiredMessage="Campo Obligatorio"></p:calendar>
                             <p:message for="calFecha"></p:message>
                         </h:panelGrid>
 

@@ -1,11 +1,11 @@
 package grupo6.DP.managed_beans;
 
-import grupo6.DP.entidades.Plantas;
-import grupo6.DP.entidades.ProcesamientoPlanta;
-import grupo6.DP.entidades.Productos;
-import grupo6.MD.sesiones.PlantasFacadeLocal;
-import grupo6.MD.sesiones.ProcesamientoPlantaFacadeLocal;
-import grupo6.MD.sesiones.ProductosFacadeLocal;
+import grupo6.DP.entidades.Planta;
+import grupo6.DP.entidades.Procesamientoplanta;
+import grupo6.DP.entidades.Producto;
+import grupo6.MD.sesiones.PlantaFacadeLocal;
+import grupo6.MD.sesiones.ProcesamientoplantaFacadeLocal;
+import grupo6.MD.sesiones.ProductoFacadeLocal;
 import grupo6.utilitarios.Crud;
 import java.io.Serializable;
 import java.util.List;
@@ -16,19 +16,19 @@ import javax.faces.view.ViewScoped;
 
 @Named(value = "transPlantaManagedBean")
 @ViewScoped
-public class TransPlantaManagedBean implements Serializable, Crud<ProcesamientoPlanta> {
+public class TransPlantaManagedBean implements Serializable, Crud<Procesamientoplanta> {
 
-    private ProcesamientoPlanta procesamientoPlanta;
-    private List<ProcesamientoPlanta> listaProcesamientoPlantas;
-    private List<Plantas> listaPlantas;
-    private List<Productos> listaProductos;
+    private Procesamientoplanta procesamientoPlanta;
+    private List<Procesamientoplanta> listaProcesamientoPlanta;
+    private List<Planta> listaPlanta;
+    private List<Producto> listaProducto;
     private boolean esNuevo;
     @EJB
-    private ProcesamientoPlantaFacadeLocal procesamientoPlantaFacadeLocal;
+    private ProcesamientoplantaFacadeLocal procesamientoPlantaFacadeLocal;
     @EJB
-    private PlantasFacadeLocal plantasFacadeLocal;
+    private PlantaFacadeLocal plantaFacadeLocal;
     @EJB
-    private ProductosFacadeLocal productosFacadeLocal;
+    private ProductoFacadeLocal productoFacadeLocal;
 
     public TransPlantaManagedBean() {
     }
@@ -36,11 +36,11 @@ public class TransPlantaManagedBean implements Serializable, Crud<ProcesamientoP
     @Override
     public void nuevo() {
         esNuevo = true;
-        procesamientoPlanta = new ProcesamientoPlanta();
+        procesamientoPlanta = new Procesamientoplanta();
     }
 
     @Override
-    public void seleccionar(ProcesamientoPlanta clase) {
+    public void seleccionar(Procesamientoplanta clase) {
         esNuevo = false;
         this.procesamientoPlanta = clase;
     }
@@ -62,7 +62,7 @@ public class TransPlantaManagedBean implements Serializable, Crud<ProcesamientoP
     }
 
     @Override
-    public void eliminar(ProcesamientoPlanta clase) {
+    public void eliminar(Procesamientoplanta clase) {
         procesamientoPlantaFacadeLocal.remove(clase);
         init();
         notificarExito("Se han eliminado los datos con éxito");
@@ -76,41 +76,41 @@ public class TransPlantaManagedBean implements Serializable, Crud<ProcesamientoP
     @Override
     @PostConstruct
     public void init() {
-        listaProcesamientoPlantas = procesamientoPlantaFacadeLocal.findAll();
-        listaPlantas = plantasFacadeLocal.findAll();
-        listaProductos = productosFacadeLocal.findAll();
+        listaProcesamientoPlanta = procesamientoPlantaFacadeLocal.findAll();
+        listaPlanta = plantaFacadeLocal.findAll();
+        listaProducto = productoFacadeLocal.findAll();
     }
 
-    public ProcesamientoPlanta getProcesamientoPlanta() {
+    public Procesamientoplanta getProcesamientoPlanta() {
         return procesamientoPlanta;
     }
 
-    public void setProcesamientoPlanta(ProcesamientoPlanta procesamientoPlanta) {
+    public void setProcesamientoPlanta(Procesamientoplanta procesamientoPlanta) {
         this.procesamientoPlanta = procesamientoPlanta;
     }
 
-    public List<ProcesamientoPlanta> getListaProcesamientoPlantas() {
-        return listaProcesamientoPlantas;
+    public List<Procesamientoplanta> getListaProcesamientoPlanta() {
+        return listaProcesamientoPlanta;
     }
 
-    public void setListaProcesamientoPlantas(List<ProcesamientoPlanta> listaProcesamientoPlantas) {
-        this.listaProcesamientoPlantas = listaProcesamientoPlantas;
+    public void setListaProcesamientoPlanta(List<Procesamientoplanta> listaProcesamientoPlanta) {
+        this.listaProcesamientoPlanta = listaProcesamientoPlanta;
     }
 
-    public List<Plantas> getListaPlantas() {
-        return listaPlantas;
+    public List<Planta> getListaPlanta() {
+        return listaPlanta;
     }
 
-    public void setListaPlantas(List<Plantas> listaPlantas) {
-        this.listaPlantas = listaPlantas;
+    public void setListaPlanta(List<Planta> listaPlanta) {
+        this.listaPlanta = listaPlanta;
     }
 
-    public List<Productos> getListaProductos() {
-        return listaProductos;
+    public List<Producto> getListaProducto() {
+        return listaProducto;
     }
 
-    public void setListaProductos(List<Productos> listaProductos) {
-        this.listaProductos = listaProductos;
+    public void setListaProducto(List<Producto> listaProducto) {
+        this.listaProducto = listaProducto;
     }
 
     public boolean isEsNuevo() {
@@ -120,5 +120,5 @@ public class TransPlantaManagedBean implements Serializable, Crud<ProcesamientoP
     public void setEsNuevo(boolean esNuevo) {
         this.esNuevo = esNuevo;
     }
-
+    
 }
