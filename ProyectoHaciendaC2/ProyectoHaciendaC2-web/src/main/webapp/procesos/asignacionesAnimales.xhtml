@@ -9,97 +9,177 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form >
-             <p:messages showDetail="true" showSummary="true">
-                    <p:autoUpdate></p:autoUpdate>
-                </p:messages>
-                <h:panelGrid id="panelCentral">
-                    <p:panel header="Listado de asignaciones" rendered="#{asignacionesManagedBean!=null}">
-                        <p:outputLabel for="selEstado" value="Se asignará: "></p:outputLabel> 
-                        <p:selectOneRadio id="selEstado" value="#{asignacionesManagedBean.seleccion}" required="true">
-                            <f:selectItem itemLabel="Animal" itemValue="true"></f:selectItem>
-                            <f:selectItem itemLabel="Planta" itemValue="false"></f:selectItem>
-                        </p:selectOneRadio>
-                        <p:message for="selEstado" ></p:message>
-                        <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{asignacionesManagedBean.nuevo()}" update="panelCentral"></p:commandButton>
-                        <p:dataTable id="dtAreas" value="#{asignacionesManagedBean.distribucionesAnimalesList}" var="asig" paginator="true" rows="10">
-                            <p:column headerText="Fecha de Asignacion" style="width: auto;" sortBy="#{asig.fechaasignacion}" filterBy="#{asig.fechaasignacion}" filterMatchMode="contains">
-                                <h:outputLabel value="#{asig.fechaasignacion}"></h:outputLabel>
-                            </p:column>
-                            <p:column headerText="Fecha de Salida" style="width: auto;" sortBy="#{asig.fechasalida}" filterBy="#{asig.fechasalida}" filterMatchMode="contains">
-                                <h:outputLabel value="#{asig.fechasalida}"></h:outputLabel>
-                            </p:column>
-                            <p:column headerText="Descripción de uso" style="width: auto;" sortBy="#{asig.descripcionuso}" filterBy="#{asig.descripcionuso}" filterMatchMode="contains">
-                                <h:outputLabel value="#{asig.descripcionuso}"></h:outputLabel>
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel>
+        <h:form>
+            <p:messages showDetail="true" showSummary="true">
+                <p:autoUpdate/>
+            </p:messages>
+            
+            <h:panelGrid id="panelCentral">
+                <p:panel header="Listado de asignaciones" rendered="#{asignacionesManagedBean!=null}">
+                    <p:outputLabel for="selEstado" value="Se asignará: "></p:outputLabel> 
+                    <p:selectOneRadio id="selEstado" value="#{asignacionesManagedBean.seleccion}" required="true">
+                        <f:selectItem itemLabel="Animal" itemValue="true"></f:selectItem>
+                        <f:selectItem itemLabel="Planta" itemValue="false"></f:selectItem>
+                    </p:selectOneRadio>
+                    <p:message for="selEstado" ></p:message>
+                    <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{asignacionesManagedBean.nuevo()}" update="panelCentral"></p:commandButton>
+                    <p:dataTable id="dtAreas" value="#{asignacionesManagedBean.distribucionesAnimalesList}" var="asig" paginator="true" rows="10">
+                        <p:column headerText="Fecha de Asignacion" style="width: auto;" sortBy="#{asig.fechaasignacion}" filterBy="#{asig.fechaasignacion}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.fechaasignacion}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Fecha de Salida" style="width: auto;" sortBy="#{asig.fechasalida}" filterBy="#{asig.fechasalida}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.fechasalida}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Descripción de uso" style="width: auto;" sortBy="#{asig.descripcionuso}" filterBy="#{asig.descripcionuso}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.descripcionuso}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Eliminar">
+                            <p:commandButton icon="ui-icon-trash" action="#{asignacionesManagedBean.eliminar(asig)}" update="dtAreas">
+                                <p:confirm header="Confirmacion" message="Confirma que desea eliminar la asignacion seleccionada ?"></p:confirm>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dataTable id="dtAreasPlanta" value="#{asignacionesManagedBean.distribucionesPlantasList}" var="asigP" paginator="true" rows="10">
+                        <p:column headerText="Fecha de Asignacion" style="width: auto;" sortBy="#{asigP.fechaasigncion}" filterBy="#{asigP.fechaasigncion}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asigP.fechaasigncion}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Fecha de Salida" style="width: auto;" sortBy="#{asigP.fechasalida}" filterBy="#{asigP.fechasalida}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asigP.fechasalida}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Descripción de uso" style="width: auto;" sortBy="#{asigP.descripcionuso}" filterBy="#{asigP.descripcionuso}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asigP.descripcionuso}"></h:outputLabel>
+                        </p:column>
+                        
+                    </p:dataTable>
+                </p:panel>
 
 
 
-                    <p:panel header="#{asignacionesManagedBean.esNuevo? 'Ingreso': 'Edicion'} de asignación" rendered="#{asignacionesManagedBean.distribucionAnimal!=null}">
-                        <h:panelGrid columns="3">
-                            <p:outputLabel for="calAsignacion" value="Fecha de Asignacion: "></p:outputLabel>
-                            <p:calendar id="calAsignacion" value="#{asignacionesManagedBean.distribucionAnimal.fechaasignacion}" pattern="dd-MMM-yy"  required="true" requiredMessage="Campo obligatorio"></p:calendar>
-                            <p:message for="calAsignacion"></p:message>
-                            <p:outputLabel for="calSalida" value="Fecha de Salida: "></p:outputLabel>
-                            <p:calendar id="calSalida" value="#{asignacionesManagedBean.distribucionAnimal.fechasalida}" pattern="dd-MMM-yy" required="true" requiredMessage="Campo obligatorio"></p:calendar>
-                            <p:message for="calSalida"></p:message>
-                            <p:outputLabel for="txtDescripcion" value="Descripcion de uso: "></p:outputLabel>
-                            <p:inputText id="txtDescripcion" value="#{asignacionesManagedBean.distribucionAnimal.descripcionuso}" required="true" requiredMessage="Campo obligatorio"></p:inputText>
-                            <p:message for="txtDescripcion"></p:message>
+                <p:panel header="#{asignacionesManagedBean.esNuevo? 'Ingreso': 'Edicion'} de asignación" rendered="#{asignacionesManagedBean.distribucionAnimal!=null}">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel for="calAsignacion" value="Fecha de Asignacion: "></p:outputLabel>
+                        <p:calendar id="calAsignacion" value="#{asignacionesManagedBean.distribucionAnimal.fechaasignacion}" pattern="dd-MMM-yy"  required="true" requiredMessage="Campo obligatorio"></p:calendar>
+                        <p:message for="calAsignacion"></p:message>
+                        <p:outputLabel for="calSalida" value="Fecha de Salida: "></p:outputLabel>
+                        <p:calendar id="calSalida" value="#{asignacionesManagedBean.distribucionAnimal.fechasalida}" pattern="dd-MMM-yy" required="true" requiredMessage="Campo obligatorio"></p:calendar>
+                        <p:message for="calSalida"></p:message>
+                        <p:outputLabel for="txtDescripcion" value="Descripcion de uso: "></p:outputLabel>
+                        <p:inputText id="txtDescripcion" value="#{asignacionesManagedBean.distribucionAnimal.descripcionuso}" required="true" requiredMessage="Campo obligatorio"></p:inputText>
+                        <p:message for="txtDescripcion"></p:message>
 
-                            <h:panelGrid columns="3">
-                                <p:outputLabel value="Area"></p:outputLabel>
-                                <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaArea()}">
-                                    <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirArea}" update="panelArea"></p:ajax>
-                                </p:commandButton>
-                            </h:panelGrid>
-
-                            <h:panelGrid id="panelArea" columns="2">
-                                <p:outputLabel value="Número de area"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.numeroarea}"></p:outputLabel>
-                                <p:outputLabel value="Tipo de area"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.idtipoarea}"></p:outputLabel>
-                                <p:outputLabel value="Area"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.area}"></p:outputLabel>
-                                <p:outputLabel value="Cercado"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.cercado}"></p:outputLabel>
-                                <p:outputLabel value="Tipo de suelo"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.tiposuelo}"></p:outputLabel>
-                                <p:outputLabel value="Agua"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.agua}"></p:outputLabel>
-                                <p:outputLabel value="Disponible"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.disponible}"></p:outputLabel>
-                            </h:panelGrid>
-
-                            <h:panelGrid columns="3">
-                                <p:outputLabel value="Animal"></p:outputLabel>
-                                <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaAnimal()}">
-                                    <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirAnimal}" update="panelAnimal"></p:ajax>
-                                </p:commandButton>
-                            </h:panelGrid>
-                            
-                            <h:panelGrid id="panelAnimal" columns="2">
-                                <p:outputLabel value="ID del animal"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.animalPK.idanimal}"></p:outputLabel>
-                                <p:outputLabel value="Nombre cientifico"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.animalPK.nombrecientifico}"></p:outputLabel>
-                                <p:outputLabel value="Nombre comun"></p:outputLabel>
-                                <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.tipodeanimal.tipodeanimalPK.nombrecomun}"></p:outputLabel>
-                            </h:panelGrid>
+                        <h:panelGrid id="panelArea" columns="2">
+                            <p:outputLabel value="Area"></p:outputLabel>
+                            <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaArea()}">
+                                <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirArea}" update="panelArea"></p:ajax>
+                            </p:commandButton>
+                            <p:outputLabel value="Número de area"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.numeroarea}"></p:outputLabel>
+                            <p:outputLabel value="Tipo de area"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.idtipoarea}"></p:outputLabel>
+                            <p:outputLabel value="Area"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.area}"></p:outputLabel>
+                            <p:outputLabel value="Cercado"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.cercado}"></p:outputLabel>
+                            <p:outputLabel value="Tipo de suelo"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.tiposuelo}"></p:outputLabel>
+                            <p:outputLabel value="Agua"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.agua}"></p:outputLabel>
+                            <p:outputLabel value="Disponible"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.disponible}"></p:outputLabel>
                         </h:panelGrid>
+
+                        
+
+                        <h:panelGrid  columns="2">
+                            <p:outputLabel value="Animal"></p:outputLabel>
+                            <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaAnimal()}">
+                                <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirAnimales}" update="panelAnimal"></p:ajax>
+                            </p:commandButton>
+                        </h:panelGrid>
+
+                        <h:panelGrid id="panelAnimal" columns="2">
+                            <p:dataTable id="dtAnimalAsignar" value="#{asignacionesManagedBean.animalesAsignarList}" var="aniAsig" paginator="true" rows="10">
+                                <p:column headerText="ID del animal" style="width: auto;" sortBy="#{aniAsig.animalPK.idanimal}" filterBy="#{aniAsig.animalPK.idanimal}" filterMatchMode="contains">
+                                    <h:outputLabel value="#{asig.fechaasignacion}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Nombre Cientifico" style="width: auto;" sortBy="#{aniAsig.animalPK.nombrecientifico}" filterBy="#{aniAsig.animalPK.nombrecientifico}" filterMatchMode="contains">
+                                    <h:outputLabel value="#{asig.fechasalida}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Nombre comun" style="width: auto;" sortBy="#{aniAsig.tipodeanimal.tipodeanimalPK.nombrecomun}" filterBy="#{aniAsig.tipodeanimal.tipodeanimalPK.nombrecomun}" filterMatchMode="contains">
+                                    <h:outputLabel value="#{asig.descripcionuso}"></h:outputLabel>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Grabar" action="#{asignacionesManagedBean.grabar()}" update="panelCentral" ></p:commandButton>
+                        <p:commandButton value="Cancelar" action="#{asignacionesManagedBean.cancelar()}" update="panelCentral" immediate="true"></p:commandButton>
+                    </h:panelGrid>
+                </p:panel>
+                
+                <p:panel header="#{asignacionesManagedBean.esNuevo? 'Ingreso': 'Edicion'} de asignación" rendered="#{asignacionesManagedBean.distribucionPlanta!=null}">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel for="calAsignacionP" value="Fecha de Asignacion: "></p:outputLabel>
+                        <p:calendar id="calAsignacionP" value="#{asignacionesManagedBean.distribucionPlanta.fechaasigncion}" pattern="dd-MMM-yy"  required="true" requiredMessage="Campo obligatorio"></p:calendar>
+                        <p:message for="calAsignacionP"></p:message>
+                        <p:outputLabel for="calSalidaP" value="Fecha de Salida: "></p:outputLabel>
+                        <p:calendar id="calSalidaP" value="#{asignacionesManagedBean.distribucionPlanta.fechasalida}" pattern="dd-MMM-yy" required="true" requiredMessage="Campo obligatorio"></p:calendar>
+                        <p:message for="calSalidaP"></p:message>
+                        <p:outputLabel for="txtDescripcionP" value="Descripcion de uso: "></p:outputLabel>
+                        <p:inputText id="txtDescripcionP" value="#{asignacionesManagedBean.distribucionPlanta.descripcionuso}" required="true" requiredMessage="Campo obligatorio"></p:inputText>
+                        <p:message for="txtDescripcionP"></p:message>
+
                         <h:panelGrid columns="2">
-                            <p:commandButton value="Grabar" action="#{asignacionesManagedBean.grabar()}" update="panelCentral" ></p:commandButton>
-                            <p:commandButton value="Cancelar" action="#{asignacionesManagedBean.cancelar()}" update="panelCentral" immediate="true"></p:commandButton>
+                            <p:outputLabel value="Area"></p:outputLabel>
+                            <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaArea()}">
+                                <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirArea}" update="panelArea"></p:ajax>
+                            </p:commandButton>
                         </h:panelGrid>
-                    </p:panel>
-                </h:panelGrid>
+
+                        <h:panelGrid id="panelAreaP" columns="2">
+                            <p:outputLabel value="Número de area"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.numeroarea}"></p:outputLabel>
+                            <p:outputLabel value="Tipo de area"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.idtipoarea}"></p:outputLabel>
+                            <p:outputLabel value="Area"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.area}"></p:outputLabel>
+                            <p:outputLabel value="Cercado"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.cercado}"></p:outputLabel>
+                            <p:outputLabel value="Tipo de suelo"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.tiposuelo}"></p:outputLabel>
+                            <p:outputLabel value="Agua"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.agua}"></p:outputLabel>
+                            <p:outputLabel value="Disponible"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.disponible}"></p:outputLabel>
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="3">
+                            <p:outputLabel value="Planta"></p:outputLabel>
+                            <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaAnimal()}">
+                                <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirAnimales}" update="panelAnimal"></p:ajax>
+                            </p:commandButton>
+                        </h:panelGrid>
+                        
+                       
+
+                        <h:panelGrid id="panelAnimalP" columns="2">
+                            <p:outputLabel value="ID del animal"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.animalPK.idanimal}"></p:outputLabel>
+                            <p:outputLabel value="Nombre cientifico"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.animalPK.nombrecientifico}"></p:outputLabel>
+                            <p:outputLabel value="Nombre comun"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.tipodeanimal.tipodeanimalPK.nombrecomun}"></p:outputLabel>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Grabar" action="#{asignacionesManagedBean.grabar()}" update="panelCentral" ></p:commandButton>
+                        <p:commandButton value="Cancelar" action="#{asignacionesManagedBean.cancelar()}" update="panelCentral" immediate="true"></p:commandButton>
+                    </h:panelGrid>
+                </p:panel>
+            </h:panelGrid>
+            
         </h:form>
-
-               
-
-
     </h:body>
 </html>
 

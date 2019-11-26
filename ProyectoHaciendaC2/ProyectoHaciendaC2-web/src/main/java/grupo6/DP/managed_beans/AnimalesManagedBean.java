@@ -8,6 +8,7 @@ package grupo6.DP.managed_beans;
 import grupo6.DP.entidades.Animal;
 import grupo6.MD.sesiones.AnimalFacadeLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,6 +26,9 @@ public class AnimalesManagedBean implements Serializable {
     @EJB
     private AnimalFacadeLocal animalesFacadeLocal;
     private List <Animal> animalesList;
+    private List <Animal> animalesAsignar;
+    private List <Animal> temp;
+    private boolean seleccionado;
     
 
     /**
@@ -33,12 +37,22 @@ public class AnimalesManagedBean implements Serializable {
     public AnimalesManagedBean() {
     }
     
-    
-     @PostConstruct
+    @PostConstruct
     public void init(){
+        seleccionado=false;
         animalesList=animalesFacadeLocal.findAll();
+        temp=new ArrayList();
+        animalesAsignar=temp;
     }
 
+    public boolean isSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(boolean seleccionado) {
+        this.seleccionado = seleccionado;
+    }
+    
     public List<Animal> getAnimalesList() {
         return animalesList;
     }
@@ -48,7 +62,16 @@ public class AnimalesManagedBean implements Serializable {
     }
     
      public void seleccionar(Animal animal){
-        PrimeFaces.current().dialog().closeDynamic(animal);
+         if(seleccionado){
+             temp.add(animal);
+         }else{
+             //animalesAsignar.remove(animal);
+         }
+        
+    }
+     
+    public void agregar (){
+        PrimeFaces.current().dialog().closeDynamic(animalesAsignar);
     }
     
 }

@@ -10,6 +10,7 @@ import grupo6.DP.entidades.Area;
 import grupo6.DP.entidades.Distribucionanimal;
 import grupo6.DP.entidades.DistribucionanimalPK;
 import grupo6.DP.entidades.Distribucionplanta;
+import grupo6.DP.entidades.DistribucionplantaPK;
 import grupo6.DP.entidades.Planta;
 import grupo6.MD.sesiones.AnimalFacadeLocal;
 import grupo6.MD.sesiones.AreaFacadeLocal;
@@ -17,6 +18,7 @@ import grupo6.MD.sesiones.DistribucionanimalFacadeLocal;
 import grupo6.MD.sesiones.DistribucionplantaFacadeLocal;
 import grupo6.MD.sesiones.PlantaFacadeLocal;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +37,14 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 public class AsignacionesManagedBean implements Serializable{
     private List<Animal> animalesList;
+    private List<Animal> animalesAsignarList;
     private List<Distribucionanimal> distribucionesAnimalesList;
     private List<Planta> plantasList;
+    private List<Planta> plantasAsignarList;
     private List<Distribucionplanta> distribucionesPlantasList;
     private List<Area> areasList;
-    private DistribucionanimalPK animalPK; 
+    private DistribucionanimalPK animalPK;
+    private DistribucionplantaPK plantaPK;
 
     
     @EJB
@@ -148,9 +153,32 @@ public class AsignacionesManagedBean implements Serializable{
     public void setAnimalPK(DistribucionanimalPK animalPK) {
         this.animalPK = animalPK;
     }
-    
-    
 
+    public List<Animal> getAnimalesAsignarList() {
+        return animalesAsignarList;
+    }
+
+    public void setAnimalesAsignarList(List<Animal> animalesAsignarList) {
+        this.animalesAsignarList = animalesAsignarList;
+    }
+
+    public List<Planta> getPlantasAsignarList() {
+        return plantasAsignarList;
+    }
+
+    public void setPlantasAsignarList(List<Planta> plantasAsignarList) {
+        this.plantasAsignarList = plantasAsignarList;
+    }
+
+    public DistribucionplantaPK getPlantaPK() {
+        return plantaPK;
+    }
+
+    public void setPlantaPK(DistribucionplantaPK plantaPK) {
+        this.plantaPK = plantaPK;
+    }
+    
+    
     
 
     public boolean isEsNuevo() {
@@ -180,8 +208,10 @@ public class AsignacionesManagedBean implements Serializable{
     @PostConstruct
     public void init(){
         animalesList=null;
+        animalesAsignarList=null;
         animalesList=animalesFacadeLocal.findAll();
         plantasList=null;
+        plantasAsignarList=null;
         plantasList=plantasFacadeLocal.findAll();
         distribucionesAnimalesList=null;
         distribucionesAnimalesList=distribucionesAnimalesFacadeLocal.findAll();
@@ -198,8 +228,10 @@ public class AsignacionesManagedBean implements Serializable{
              distribucionAnimal=new Distribucionanimal();
              animalPK=new DistribucionanimalPK();
         }   
-        else
-            distribucionPlanta=new Distribucionplanta();
+        else{
+             distribucionPlanta=new Distribucionplanta();
+             plantaPK=new DistribucionplantaPK();
+        }
         esNuevo=true;
     }
     
@@ -207,14 +239,32 @@ public class AsignacionesManagedBean implements Serializable{
         try{
             if(esNuevo){
                 if(Seleccion){
-                    animalPK.setIdanimal(distribucionAnimal.getAnimal().getAnimalPK().getIdanimal());
-                    animalPK.setNombrecientifico(distribucionAnimal.getAnimal().getAnimalPK().getNombrecientifico());
-                    animalPK.setNumeroarea(distribucionAnimal.getArea().getAreaPK().getNumeroarea());
-                    animalPK.setIdtipoarea(distribucionAnimal.getArea().getAreaPK().getIdtipoarea());
-                    distribucionAnimal.setDistribucionanimalPK(animalPK);
-                    distribucionesAnimalesFacadeLocal.create(distribucionAnimal);
-                }else
-                    distribucionesPlantasFacadeLocal.create(distribucionPlanta);
+                    for (Animal animalesAsignarList1 : animalesAsignarList) {
+                        distribucionAnimal.setAnimal(animalesAsignarList1);                 
+                        animalPK.setIdanimal(distribucionAnimal.getAnimal().getAnimalPK().getIdanimal());
+                        animalPK.setNombrecientifico(distribucionAnimal.getAnimal().getAnimalPK().getNombrecientifico());
+                        animalPK.setNumeroarea(distribucionAnimal.getArea().getAreaPK().getNumeroarea());
+                        animalPK.setIdtipoarea(distribucionAnimal.getArea().getAreaPK().getIdtipoarea());
+                        distribucionAnimal.setDistribucionanimalPK(animalPK);
+                        distribucionesAnimalesFacadeLocal.create(distribucionAnimal);
+                        animalPK=null;
+                        animalPK=new DistribucionanimalPK();
+                    }
+                }else{
+                    for(Planta plantasAsignarList1: plantasAsignarList){
+                        distribucionPlanta.setPlanta(plantasAsignarList1);
+                        plantaPK.setIdplanta(distribucionPlanta.getPlanta().getPlantaPK().getIdplanta());
+                        plantaPK.setNombrecientifico(distribucionPlanta.getPlanta().getPlantaPK().getNombrecientifico());
+                        plantaPK.setNumeroarea(distribucionPlanta.getArea().getAreaPK().getNumeroarea());
+                        plantaPK.setIdtipoarea(distribucionPlanta.getArea().getAreaPK().getIdtipoarea());
+                        distribucionPlanta.setDistribucionplantaPK(plantaPK);
+                        distribucionesPlantasFacadeLocal.create(distribucionPlanta);
+                        plantaPK=null;
+                        plantaPK=new DistribucionplantaPK();
+                    }
+                   
+                }
+                    
             }else{
                 if(Seleccion)
                     distribucionesAnimalesFacadeLocal.edit(distribucionAnimal);
@@ -228,13 +278,23 @@ public class AsignacionesManagedBean implements Serializable{
                 distribucionAnimal=null;
                 animalPK=null;
             }           
-            else
+            else{
                 distribucionPlanta=null;
+                plantaPK=null;
+            }
+                
             esNuevo=false;
             init();
         }   
     }
-    
+     public void eliminar(Distribucionanimal distribucion) {
+        try{
+            distribucionesAnimalesFacadeLocal.remove(distribucion);
+            init();
+        }catch(Exception e){
+           System.out.println(e.getMessage());
+        }
+    }
     
     public void cancelar(){
         if(Seleccion)
@@ -274,7 +334,22 @@ public class AsignacionesManagedBean implements Serializable{
         }
     
     
-    public void recibirAnimal(SelectEvent e){
-            distribucionAnimal.setAnimal((Animal) e.getObject());
+    public void recibirAnimales(SelectEvent e){
+            this.setAnimalesAsignarList((List<Animal>) e.getObject());
+    }
+    
+     public void abrirBusquedaPlanta(){
+            
+        Map<String, Object> opciones =new HashMap<>();
+        opciones.put("modal", true);
+        opciones.put("contentWidth", 800);
+        opciones.put("contentHeigth", 500);
+        
+        PrimeFaces.current().dialog().openDynamic("seleccion_planta", opciones, null);
+        }
+    
+    
+    public void recibirPlanta(SelectEvent e){
+            this.setPlantasAsignarList((List<Planta>) e.getObject());
     }        
 }
