@@ -38,6 +38,10 @@
                                 <p:confirm header="Confirmacion" message="Confirma que desea eliminar la asignacion seleccionada ?"></p:confirm>
                             </p:commandButton>
                         </p:column>
+                        <p:column headerText="Modificar">
+                            <p:commandButton icon="ui-icon-pencil" action="#{asignacionesManagedBean.seleccionar(asig)}" update="panelCentral">
+                            </p:commandButton>
+                        </p:column>
                     </p:dataTable>
                     
                     <p:dataTable id="dtAreasPlanta" value="#{asignacionesManagedBean.distribucionesPlantasList}" var="asigP" paginator="true" rows="10">
@@ -177,6 +181,11 @@
                         <p:commandButton value="Cancelar" action="#{asignacionesManagedBean.cancelar()}" update="panelCentral" immediate="true"></p:commandButton>
                     </h:panelGrid>
                 </p:panel>
+                
+                
+                
+                
+                
             </h:panelGrid>
             
         </h:form>
