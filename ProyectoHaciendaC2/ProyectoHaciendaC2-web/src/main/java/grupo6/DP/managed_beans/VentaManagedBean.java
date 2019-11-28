@@ -1,24 +1,20 @@
 package grupo6.DP.managed_beans;
 
-import grupo6.DP.entidades.Clientes;
-import grupo6.DP.entidades.ProcesamientoAnimal;
-import grupo6.DP.entidades.Productos;
-import grupo6.DP.entidades.SalidaProductos;
-import grupo6.DP.entidades.Ventas;
-import grupo6.MD.sesiones.ClientesFacadeLocal;
-import grupo6.MD.sesiones.ProcesamientoAnimalFacadeLocal;
-import grupo6.MD.sesiones.SalidaProductosFacadeLocal;
-import grupo6.MD.sesiones.VentasFacadeLocal;
+import grupo6.DP.entidades.Procesamientoanimal;
+import grupo6.DP.entidades.Salidaproducto;
+import grupo6.MD.sesiones.ClienteFacadeLocal;
+import grupo6.MD.sesiones.ProcesamientoanimalFacadeLocal;
+import grupo6.MD.sesiones.SalidaproductoFacadeLocal;
+import grupo6.MD.sesiones.VentaFacadeLocal;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.print.attribute.standard.DateTimeAtCompleted;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -28,110 +24,99 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 @ViewScoped
 public class VentaManagedBean implements Serializable {
 
-    private Clientes cliente;
-    private SalidaProductos salidaProducto;
-    private ProcesamientoAnimal productoUsable;
-    private Ventas venta;
-    private List<Clientes> clientes;
-    private List<ProcesamientoAnimal> productos;
-    private List<ProcesamientoAnimal> productosComprados;
+    @EJB
+    private ProcesamientoanimalFacadeLocal procesamientoanimalFacadeLocal;
+    @EJB
+    private SalidaproductoFacadeLocal salidaproductoFacadeLocal;
+    @EJB
+    private VentaFacadeLocal ventaFacadeLocal;
+    @EJB
+    private ClienteFacadeLocal clienteFacadeLocal;
 
-    @EJB
-    private ClientesFacadeLocal clienteFacadeLocal;
-    @EJB
-    private SalidaProductosFacadeLocal salidaProductoFacadeLocal;
-    @EJB
-    private ProcesamientoAnimalFacadeLocal productoUsableFacadeLocal;
-    @EJB
-    private VentasFacadeLocal ventaFacadeLocal;
+    private Procesamientoanimal producto;
+    private List<Procesamientoanimal> productos;
+    private List<Salidaproducto> productosPreVenta;
+
+    public Procesamientoanimal getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Procesamientoanimal producto) {
+        this.producto = producto;
+    }
+
+    public List<Procesamientoanimal> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Procesamientoanimal> productos) {
+        this.productos = productos;
+    }
+
+
+    public List<Salidaproducto> getProductosPreVenta() {
+        return productosPreVenta;
+    }
+
+    public void setProductosPreVenta(List<Salidaproducto> productosPreVenta) {
+        this.productosPreVenta = productosPreVenta;
+    }
 
     public VentaManagedBean() {
     }
 
     @PostConstruct
     public void onInit() {
-        cliente = new Clientes();
-        salidaProducto = new SalidaProductos();
-        productoUsable = new ProcesamientoAnimal();
-        venta = new Ventas();
-        clientes = clienteFacadeLocal.findAll();
-        productos = productoUsableFacadeLocal.findAll();
-        productosComprados = new ArrayList<>();
-    }
-
-    public void nuevaVenta() {
-        ProcesamientoAnimal PAN = productos.get(0) == null ? new ProcesamientoAnimal() : productos.get(0);
-        productosComprados.add(PAN);
+        productos = procesamientoanimalFacadeLocal.findAll();
+        productosPreVenta = new ArrayList<>();
+        productos.stream().map((p) -> {
+            Salidaproducto sp = new Salidaproducto();
+            sp.setProcesamientoanimal(p);
+            return sp;
+        }).forEachOrdered((sp) -> {
+            productosPreVenta.add(sp);
+        });
     }
 
     private void equilibrarInventario() {
     }
+
     
-    private void vender(){
-        for (ProcesamientoAnimal pa : productosComprados) {
-            SalidaProductos sa = new SalidaProductos();
-            sa.setProcesamientoAnimal(pa);
-            sa.setCantidad(pa.getCantidad());
-            sa.setFechaSalida(Date.from(Instant.MIN));
-            salidaProductoFacadeLocal.create(sa
-                    );
+    public void productoListener(ValueChangeEvent e){
+        producto = (Procesamientoanimal)e.getNewValue();
+        
+    }   
+    
+   /* 
+    public void onRowEdit(RowEditEvent<Car> event) {
+        FacesMessage msg = new FacesMessage("Car Edited", event.getObject().getId());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onRowCancel(RowEditEvent<Car> event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", event.getObject().getId());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+         
+        if(newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
+*/
 
-    public Clientes getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Clientes cliente) {
-        this.cliente = cliente;
-    }
-
-    public SalidaProductos getSalidaProducto() {
-        return salidaProducto;
-    }
-
-    public void setSalidaProducto(SalidaProductos salidaProducto) {
-        this.salidaProducto = salidaProducto;
-    }
-
-    public ProcesamientoAnimal getProductoUsable() {
-        return productoUsable;
-    }
-
-    public void setProductoUsable(ProcesamientoAnimal productoUsable) {
-        this.productoUsable = productoUsable;
-    }
-
-    public Ventas getVenta() {
-        return venta;
-    }
-
-    public void setVenta(Ventas venta) {
-        this.venta = venta;
-    }
-
-    public List<Clientes> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Clientes> clientes) {
-        this.clientes = clientes;
-    }
-
-    public List<ProcesamientoAnimal> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<ProcesamientoAnimal> productos) {
-        this.productos = productos;
-    }
-
-    public List<ProcesamientoAnimal> getProductosComprados() {
-        return productosComprados;
-    }
-
-    public void setProductosComprados(List<ProcesamientoAnimal> productosComprados) {
-        this.productosComprados = productosComprados;
+    public void nuevoProducto() {
+        Salidaproducto salidaProducto = new Salidaproducto();
+        try {
+            salidaProducto.setProcesamientoanimal(productos.get(0));
+            productosPreVenta.add(salidaProducto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
