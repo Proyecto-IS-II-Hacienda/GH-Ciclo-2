@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "INSUMO")
@@ -54,9 +54,9 @@ public class Insumo implements Serializable {
     private String descripcion;
     @JoinColumn(name = "IDADMINS", referencedColumnName = "IDADMINS")
     @ManyToOne(optional = false)
-    private Tipoadministracioninsumo idadmins;
+    private TipoAdministracionInsumo idadmins;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codinsumo")
-    private List<Entradainsumo> entradainsumoList;
+    private List<EntradaInsumo> entradaInsumoList;
 
     public Insumo() {
     }
@@ -94,21 +94,21 @@ public class Insumo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Tipoadministracioninsumo getIdadmins() {
+    public TipoAdministracionInsumo getIdadmins() {
         return idadmins;
     }
 
-    public void setIdadmins(Tipoadministracioninsumo idadmins) {
+    public void setIdadmins(TipoAdministracionInsumo idadmins) {
         this.idadmins = idadmins;
     }
 
     @XmlTransient
-    public List<Entradainsumo> getEntradainsumoList() {
-        return entradainsumoList;
+    public List<EntradaInsumo> getEntradaInsumoList() {
+        return entradaInsumoList;
     }
 
-    public void setEntradainsumoList(List<Entradainsumo> entradainsumoList) {
-        this.entradainsumoList = entradainsumoList;
+    public void setEntradaInsumoList(List<EntradaInsumo> entradaInsumoList) {
+        this.entradaInsumoList = entradaInsumoList;
     }
 
     @Override

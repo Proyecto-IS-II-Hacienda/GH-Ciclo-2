@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Embeddable
 public class AreaPK implements Serializable {

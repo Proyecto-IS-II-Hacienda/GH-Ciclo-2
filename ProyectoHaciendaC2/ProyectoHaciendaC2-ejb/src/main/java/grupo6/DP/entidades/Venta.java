@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "VENTA")
@@ -38,7 +38,7 @@ public class Venta implements Serializable {
     private Cliente cliente;
     @JoinColumn(name = "IDSALIDAPRODUCTO", referencedColumnName = "IDSALIDAPRODUCTO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Salidaproducto salidaproducto;
+    private SalidaProducto salidaProducto;
 
     public Venta() {
     }
@@ -67,12 +67,12 @@ public class Venta implements Serializable {
         this.cliente = cliente;
     }
 
-    public Salidaproducto getSalidaproducto() {
-        return salidaproducto;
+    public SalidaProducto getSalidaProducto() {
+        return salidaProducto;
     }
 
-    public void setSalidaproducto(Salidaproducto salidaproducto) {
-        this.salidaproducto = salidaproducto;
+    public void setSalidaProducto(SalidaProducto salidaProducto) {
+        this.salidaProducto = salidaProducto;
     }
 
     @Override

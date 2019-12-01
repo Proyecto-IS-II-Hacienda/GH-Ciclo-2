@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "ANIMAL")
@@ -73,13 +73,13 @@ public class Animal implements Serializable {
         @JoinColumn(name = "NOMBRECOMUN", referencedColumnName = "NOMBRECOMUN")
         , @JoinColumn(name = "NOMBRECIENTIFICO", referencedColumnName = "NOMBRECIENTIFICO", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-    private Tipodeanimal tipodeanimal;
+    private TipoDeAnimal tipoDeAnimal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-    private List<Distribucionanimal> distribucionanimalList;
+    private List<DistribucionAnimal> distribucionAnimalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-    private List<Procesamientoanimal> procesamientoanimalList;
+    private List<ProcesamientoAnimal> procesamientoAnimalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
-    private List<Cuidadoanimal> cuidadoanimalList;
+    private List<CuidadoAnimal> cuidadoAnimalList;
 
     public Animal() {
     }
@@ -149,39 +149,39 @@ public class Animal implements Serializable {
         this.sexo = sexo;
     }
 
-    public Tipodeanimal getTipodeanimal() {
-        return tipodeanimal;
+    public TipoDeAnimal getTipoDeAnimal() {
+        return tipoDeAnimal;
     }
 
-    public void setTipodeanimal(Tipodeanimal tipodeanimal) {
-        this.tipodeanimal = tipodeanimal;
-    }
-
-    @XmlTransient
-    public List<Distribucionanimal> getDistribucionanimalList() {
-        return distribucionanimalList;
-    }
-
-    public void setDistribucionanimalList(List<Distribucionanimal> distribucionanimalList) {
-        this.distribucionanimalList = distribucionanimalList;
+    public void setTipoDeAnimal(TipoDeAnimal tipoDeAnimal) {
+        this.tipoDeAnimal = tipoDeAnimal;
     }
 
     @XmlTransient
-    public List<Procesamientoanimal> getProcesamientoanimalList() {
-        return procesamientoanimalList;
+    public List<DistribucionAnimal> getDistribucionAnimalList() {
+        return distribucionAnimalList;
     }
 
-    public void setProcesamientoanimalList(List<Procesamientoanimal> procesamientoanimalList) {
-        this.procesamientoanimalList = procesamientoanimalList;
+    public void setDistribucionAnimalList(List<DistribucionAnimal> distribucionAnimalList) {
+        this.distribucionAnimalList = distribucionAnimalList;
     }
 
     @XmlTransient
-    public List<Cuidadoanimal> getCuidadoanimalList() {
-        return cuidadoanimalList;
+    public List<ProcesamientoAnimal> getProcesamientoAnimalList() {
+        return procesamientoAnimalList;
     }
 
-    public void setCuidadoanimalList(List<Cuidadoanimal> cuidadoanimalList) {
-        this.cuidadoanimalList = cuidadoanimalList;
+    public void setProcesamientoAnimalList(List<ProcesamientoAnimal> procesamientoAnimalList) {
+        this.procesamientoAnimalList = procesamientoAnimalList;
+    }
+
+    @XmlTransient
+    public List<CuidadoAnimal> getCuidadoAnimalList() {
+        return cuidadoAnimalList;
+    }
+
+    public void setCuidadoAnimalList(List<CuidadoAnimal> cuidadoAnimalList) {
+        this.cuidadoAnimalList = cuidadoAnimalList;
     }
 
     @Override

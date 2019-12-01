@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "PRODUCTO")
@@ -57,9 +57,9 @@ public class Producto implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-    private List<Procesamientoanimal> procesamientoanimalList;
+    private List<ProcesamientoAnimal> procesamientoAnimalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-    private List<Procesamientoplanta> procesamientoplantaList;
+    private List<ProcesamientoPlanta> procesamientoPlantaList;
 
     public Producto() {
     }
@@ -107,21 +107,21 @@ public class Producto implements Serializable {
     }
 
     @XmlTransient
-    public List<Procesamientoanimal> getProcesamientoanimalList() {
-        return procesamientoanimalList;
+    public List<ProcesamientoAnimal> getProcesamientoAnimalList() {
+        return procesamientoAnimalList;
     }
 
-    public void setProcesamientoanimalList(List<Procesamientoanimal> procesamientoanimalList) {
-        this.procesamientoanimalList = procesamientoanimalList;
+    public void setProcesamientoAnimalList(List<ProcesamientoAnimal> procesamientoAnimalList) {
+        this.procesamientoAnimalList = procesamientoAnimalList;
     }
 
     @XmlTransient
-    public List<Procesamientoplanta> getProcesamientoplantaList() {
-        return procesamientoplantaList;
+    public List<ProcesamientoPlanta> getProcesamientoPlantaList() {
+        return procesamientoPlantaList;
     }
 
-    public void setProcesamientoplantaList(List<Procesamientoplanta> procesamientoplantaList) {
-        this.procesamientoplantaList = procesamientoplantaList;
+    public void setProcesamientoPlantaList(List<ProcesamientoPlanta> procesamientoPlantaList) {
+        this.procesamientoPlantaList = procesamientoPlantaList;
     }
 
     @Override

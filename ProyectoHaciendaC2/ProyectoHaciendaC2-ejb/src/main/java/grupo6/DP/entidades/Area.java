@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "AREA")
@@ -67,12 +67,12 @@ public class Area implements Serializable {
     @Column(name = "DISPONIBLE")
     private BigInteger disponible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "area")
-    private List<Distribucionanimal> distribucionanimalList;
+    private List<DistribucionAnimal> distribucionAnimalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "area")
-    private List<Distribucionplanta> distribucionplantaList;
+    private List<DistribucionPlanta> distribucionPlantaList;
     @JoinColumn(name = "IDTIPOAREA", referencedColumnName = "IDTIPOAREA", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Tipoarea tipoarea;
+    private TipoArea tipoArea;
 
     public Area() {
     }
@@ -143,29 +143,29 @@ public class Area implements Serializable {
     }
 
     @XmlTransient
-    public List<Distribucionanimal> getDistribucionanimalList() {
-        return distribucionanimalList;
+    public List<DistribucionAnimal> getDistribucionAnimalList() {
+        return distribucionAnimalList;
     }
 
-    public void setDistribucionanimalList(List<Distribucionanimal> distribucionanimalList) {
-        this.distribucionanimalList = distribucionanimalList;
+    public void setDistribucionAnimalList(List<DistribucionAnimal> distribucionAnimalList) {
+        this.distribucionAnimalList = distribucionAnimalList;
     }
 
     @XmlTransient
-    public List<Distribucionplanta> getDistribucionplantaList() {
-        return distribucionplantaList;
+    public List<DistribucionPlanta> getDistribucionPlantaList() {
+        return distribucionPlantaList;
     }
 
-    public void setDistribucionplantaList(List<Distribucionplanta> distribucionplantaList) {
-        this.distribucionplantaList = distribucionplantaList;
+    public void setDistribucionPlantaList(List<DistribucionPlanta> distribucionPlantaList) {
+        this.distribucionPlantaList = distribucionPlantaList;
     }
 
-    public Tipoarea getTipoarea() {
-        return tipoarea;
+    public TipoArea getTipoArea() {
+        return tipoArea;
     }
 
-    public void setTipoarea(Tipoarea tipoarea) {
-        this.tipoarea = tipoarea;
+    public void setTipoArea(TipoArea tipoArea) {
+        this.tipoArea = tipoArea;
     }
 
     @Override

@@ -5,7 +5,7 @@
  */
 package grupo6.MD.sesiones;
 
-import grupo6.DP.entidades.Insumo;
+import grupo6.DP.entidades.ProcesamientoPlanta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author marce
  */
 @Stateless
-public class InsumoFacade extends AbstractFacade<Insumo> implements InsumoFacadeLocal {
+public class ProcesamientoPlantaFacade extends AbstractFacade<ProcesamientoPlanta> implements ProcesamientoPlantaFacadeLocal {
 
     @PersistenceContext(unitName = "grupo6_ProyectoHaciendaC2-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class InsumoFacade extends AbstractFacade<Insumo> implements InsumoFacade
         return em;
     }
 
-    public InsumoFacade() {
-        super(Insumo.class);
+    public ProcesamientoPlantaFacade() {
+        super(ProcesamientoPlanta.class);
     }
     
 }

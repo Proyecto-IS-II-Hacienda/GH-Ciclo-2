@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Embeddable
 public class AnimalPK implements Serializable {

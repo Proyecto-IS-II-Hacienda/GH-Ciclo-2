@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "PLANTA")
@@ -53,16 +53,16 @@ public class Planta implements Serializable {
     @Column(name = "OBSERVACION")
     private String observacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planta")
-    private List<Distribucionplanta> distribucionplantaList;
+    private List<DistribucionPlanta> distribucionPlantaList;
     @JoinColumns({
         @JoinColumn(name = "NOMBRECIENTIFICO", referencedColumnName = "NOMBRECIENTIFICO", insertable = false, updatable = false)
         , @JoinColumn(name = "NOMBRECOMUN", referencedColumnName = "NOMBRECOMUN")})
     @ManyToOne(optional = false)
-    private Tipoplanta tipoplanta;
+    private TipoPlanta tipoPlanta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planta")
-    private List<Cuidadoplanta> cuidadoplantaList;
+    private List<CuidadoPlanta> cuidadoPlantaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planta")
-    private List<Procesamientoplanta> procesamientoplantaList;
+    private List<ProcesamientoPlanta> procesamientoPlantaList;
 
     public Planta() {
     }
@@ -105,38 +105,38 @@ public class Planta implements Serializable {
     }
 
     @XmlTransient
-    public List<Distribucionplanta> getDistribucionplantaList() {
-        return distribucionplantaList;
+    public List<DistribucionPlanta> getDistribucionPlantaList() {
+        return distribucionPlantaList;
     }
 
-    public void setDistribucionplantaList(List<Distribucionplanta> distribucionplantaList) {
-        this.distribucionplantaList = distribucionplantaList;
+    public void setDistribucionPlantaList(List<DistribucionPlanta> distribucionPlantaList) {
+        this.distribucionPlantaList = distribucionPlantaList;
     }
 
-    public Tipoplanta getTipoplanta() {
-        return tipoplanta;
+    public TipoPlanta getTipoPlanta() {
+        return tipoPlanta;
     }
 
-    public void setTipoplanta(Tipoplanta tipoplanta) {
-        this.tipoplanta = tipoplanta;
-    }
-
-    @XmlTransient
-    public List<Cuidadoplanta> getCuidadoplantaList() {
-        return cuidadoplantaList;
-    }
-
-    public void setCuidadoplantaList(List<Cuidadoplanta> cuidadoplantaList) {
-        this.cuidadoplantaList = cuidadoplantaList;
+    public void setTipoPlanta(TipoPlanta tipoPlanta) {
+        this.tipoPlanta = tipoPlanta;
     }
 
     @XmlTransient
-    public List<Procesamientoplanta> getProcesamientoplantaList() {
-        return procesamientoplantaList;
+    public List<CuidadoPlanta> getCuidadoPlantaList() {
+        return cuidadoPlantaList;
     }
 
-    public void setProcesamientoplantaList(List<Procesamientoplanta> procesamientoplantaList) {
-        this.procesamientoplantaList = procesamientoplantaList;
+    public void setCuidadoPlantaList(List<CuidadoPlanta> cuidadoPlantaList) {
+        this.cuidadoPlantaList = cuidadoPlantaList;
+    }
+
+    @XmlTransient
+    public List<ProcesamientoPlanta> getProcesamientoPlantaList() {
+        return procesamientoPlantaList;
+    }
+
+    public void setProcesamientoPlantaList(List<ProcesamientoPlanta> procesamientoPlantaList) {
+        this.procesamientoPlantaList = procesamientoPlantaList;
     }
 
     @Override
