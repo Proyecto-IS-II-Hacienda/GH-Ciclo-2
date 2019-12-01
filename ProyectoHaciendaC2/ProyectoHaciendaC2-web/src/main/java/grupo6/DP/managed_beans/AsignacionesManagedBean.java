@@ -18,7 +18,7 @@ import grupo6.MD.sesiones.DistribucionanimalFacadeLocal;
 import grupo6.MD.sesiones.DistribucionplantaFacadeLocal;
 import grupo6.MD.sesiones.PlantaFacadeLocal;
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,12 +50,15 @@ public class AsignacionesManagedBean implements Serializable{
     @EJB
     private AnimalFacadeLocal animalesFacadeLocal;
     private Animal animal;
+    
     @EJB
     private DistribucionanimalFacadeLocal distribucionesAnimalesFacadeLocal;
     private Distribucionanimal distribucionAnimal;
+    
     @EJB
     private PlantaFacadeLocal plantasFacadeLocal;
     private Planta planta;
+    
     @EJB
     private DistribucionplantaFacadeLocal distribucionesPlantasFacadeLocal;
     private Distribucionplanta distribucionPlanta;
@@ -220,6 +223,11 @@ public class AsignacionesManagedBean implements Serializable{
         areasList=null;
         areasList=areasFacadeLocal.findAll();
         esNuevo=false;
+        distribucionAnimal=null;
+        distribucionPlanta=null;
+        animalPK=null;
+        plantaPK=null;
+        Seleccion=true;           
     }
     
     
@@ -288,14 +296,14 @@ public class AsignacionesManagedBean implements Serializable{
         }   
     }
      public void eliminar(Distribucionanimal distribucion) {
-        try{
+         try {
             distribucionesAnimalesFacadeLocal.remove(distribucion);
             init();
-        }catch(Exception e){
-           System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
-    
+
     public void cancelar(){
         if(Seleccion)
             distribucionAnimal=null;
