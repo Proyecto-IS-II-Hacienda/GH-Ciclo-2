@@ -35,7 +35,8 @@ import org.primefaces.event.SelectEvent;
  */
 @Named(value = "asignacionesManagedBean")
 @ViewScoped
-public class AsignacionesManagedBean implements Serializable{
+public class AsignacionesManagedBean implements Serializable {
+
     private List<Animal> animalesList;
     private List<Animal> animalesAsignarList;
     private List<Distribucionanimal> distribucionesAnimalesList;
@@ -47,7 +48,6 @@ public class AsignacionesManagedBean implements Serializable{
     private DistribucionplantaPK plantaPK;
     private String NombreArea;
 
-    
     @EJB
     private AnimalFacadeLocal animalesFacadeLocal;
     private Animal animal;
@@ -65,8 +65,6 @@ public class AsignacionesManagedBean implements Serializable{
     private AreaFacadeLocal areasFacadeLocal;
     private boolean esNuevo;
     private boolean Seleccion;
-    
-    
 
     public List<Animal> getAnimalesList() {
         return animalesList;
@@ -179,9 +177,6 @@ public class AsignacionesManagedBean implements Serializable{
     public void setPlantaPK(DistribucionplantaPK plantaPK) {
         this.plantaPK = plantaPK;
     }
-    
-    
-    
 
     public boolean isEsNuevo() {
         return esNuevo;
@@ -198,31 +193,32 @@ public class AsignacionesManagedBean implements Serializable{
     public void setSeleccion(boolean Seleccion) {
         this.Seleccion = Seleccion;
     }
-    
 
     /**
      * Creates a new instance of AsignacionesManagedBean
      */
     public AsignacionesManagedBean() {
-        
+
     }
-    
+
     @PostConstruct
-    public void init(){
-        animalesList=null;
-        animalesAsignarList=null;
-        animalesList=animalesFacadeLocal.findAll();
-        plantasList=null;
-        plantasAsignarList=null;
-        plantasList=plantasFacadeLocal.findAll();
-        distribucionesAnimalesList=null;
-        distribucionesAnimalesList=distribucionesAnimalesFacadeLocal.findAll();
-        distribucionesPlantasList=null;
-        distribucionesPlantasList=distribucionesPlantasFacadeLocal.findAll();   
-        areasList=null;
-        areasList=areasFacadeLocal.findAll();
-        esNuevo=false;
+    public void init() {
+        animalesList = null;
+        animalesAsignarList = null;
+        animalesList = animalesFacadeLocal.findAll();
+        plantasList = null;
+        plantasAsignarList = null;
+        plantasList = plantasFacadeLocal.findAll();
+        distribucionesAnimalesList = null;
+        distribucionesAnimalesList = distribucionesAnimalesFacadeLocal.findAll();
+        distribucionesPlantasList = null;
+        distribucionesPlantasList = distribucionesPlantasFacadeLocal.findAll();
+        areasList = null;
+        areasList = areasFacadeLocal.findAll();
+        esNuevo = true;
         //NombreArea=areasFacadeLocal.find(this).getTipoarea().getNombrearea();
+        distribucionAnimal = null;
+        distribucionPlanta = null;
     }
 
     public String getNombreArea() {
@@ -232,156 +228,122 @@ public class AsignacionesManagedBean implements Serializable{
     public void setNombreArea(String NombreArea) {
         this.NombreArea = NombreArea;
     }
-    
-    
-    public void nuevo(){
-        if(Seleccion){
-             distribucionAnimal=new Distribucionanimal();
-             animalPK=new DistribucionanimalPK();
-        }   
-        else{
-             distribucionPlanta=new Distribucionplanta();
-             plantaPK=new DistribucionplantaPK();
+
+    public void nuevo() {
+        if (Seleccion) {
+            distribucionAnimal = new Distribucionanimal();
+            animalPK = new DistribucionanimalPK();
+        } else {
+            distribucionPlanta = new Distribucionplanta();
+            plantaPK = new DistribucionplantaPK();
         }
-        esNuevo=true;
+        esNuevo = true;
     }
-    
-    public void grabar(){
-        try{
-            if(esNuevo){
-                if(Seleccion){
-                    for (Animal animalesAsignarList1 : animalesAsignarList) {
-                        distribucionAnimal.setAnimal(animalesAsignarList1);                 
-                        animalPK.setIdanimal(distribucionAnimal.getAnimal().getAnimalPK().getIdanimal());
-                        animalPK.setNombrecientifico(distribucionAnimal.getAnimal().getAnimalPK().getNombrecientifico());
-                        animalPK.setNumeroarea(distribucionAnimal.getArea().getAreaPK().getNumeroarea());
-                        animalPK.setIdtipoarea(distribucionAnimal.getArea().getAreaPK().getIdtipoarea());
-                        distribucionAnimal.setDistribucionanimalPK(animalPK);
-                        distribucionesAnimalesFacadeLocal.create(distribucionAnimal);
-                        animalPK=null;
-                        animalPK=new DistribucionanimalPK();
-                    }
-                }else{
-                    for(Planta plantasAsignarList1: plantasAsignarList){
-                        distribucionPlanta.setPlanta(plantasAsignarList1);
-                        plantaPK.setIdplanta(distribucionPlanta.getPlanta().getPlantaPK().getIdplanta());
-                        plantaPK.setNombrecientifico(distribucionPlanta.getPlanta().getPlantaPK().getNombrecientifico());
-                        plantaPK.setNumeroarea(distribucionPlanta.getArea().getAreaPK().getNumeroarea());
-                        plantaPK.setIdtipoarea(distribucionPlanta.getArea().getAreaPK().getIdtipoarea());
-                        distribucionPlanta.setDistribucionplantaPK(plantaPK);
-                        distribucionesPlantasFacadeLocal.create(distribucionPlanta);
-                        plantaPK=null;
-                        plantaPK=new DistribucionplantaPK();
-                    }
-                   
+
+    public void grabar() {
+        try {
+            if (esNuevo) {
+                if (distribucionAnimal != null) {
+
+                    distribucionesAnimalesFacadeLocal.create(distribucionAnimal);
+                } else {
+                    distribucionesPlantasFacadeLocal.create(distribucionPlanta);
                 }
-                    
-            }else{
-                if(distribucionAnimal!=null)
+
+            } else {
+                if (distribucionAnimal != null) {
                     distribucionesAnimalesFacadeLocal.edit(distribucionAnimal);
-                else
+                } else if (distribucionPlanta != null) {
                     distribucionesPlantasFacadeLocal.edit(distribucionPlanta);
+                }
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }finally{
-            if(distribucionAnimal!=null){
-                distribucionAnimal=null;
-                animalPK=null;
-            }           
-            else{
-                distribucionPlanta=null;
-                plantaPK=null;
-            }
-                
-            esNuevo=false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             init();
-        }   
+        }
     }
-     public void eliminar(Distribucionanimal distribucion) {
-        try{
+
+    public void eliminar(Distribucionanimal distribucion) {
+        try {
             distribucionesAnimalesFacadeLocal.remove(distribucion);
             init();
-        }catch(Exception e){
-           System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
-    
-    public void cancelar(){
-        if(distribucionAnimal!=null)
-            distribucionAnimal=null;
-        else
-            distribucionPlanta=null;
+
+    public void cancelar() {
+        if (distribucionAnimal != null) {
+            distribucionAnimal = null;
+        } else {
+            distribucionPlanta = null;
+        }
     }
-        
-        public void abrirBusquedaArea(){
-            
-        Map<String, Object> opciones =new HashMap<>();
+
+    public void abrirBusquedaArea() {
+
+        Map<String, Object> opciones = new HashMap<>();
         opciones.put("modal", true);
         opciones.put("contentWidth", 800);
         opciones.put("contentHeigth", 500);
-        
+
         PrimeFaces.current().dialog().openDynamic("seleccion_area", opciones, null);
-        }
-    
-    
-    public void recibirArea(SelectEvent e){
-        if(distribucionAnimal!=null)
+    }
+
+    public void recibirArea(SelectEvent e) {
+        if (distribucionAnimal != null) {
             distribucionAnimal.setArea((Area) e.getObject());
-        else
+        } else {
             distribucionPlanta.setArea((Area) e.getObject());
-    } 
-    
-    
-    
-     public void abrirBusquedaAnimal(){
-            
-        Map<String, Object> opciones =new HashMap<>();
+        }
+    }
+
+    public void abrirBusquedaAnimal() {
+
+        Map<String, Object> opciones = new HashMap<>();
         opciones.put("modal", true);
         opciones.put("contentWidth", 800);
         opciones.put("contentHeigth", 500);
-        
+
         PrimeFaces.current().dialog().openDynamic("seleccion_animal", opciones, null);
-        }
-    
-    
-    public void recibirAnimales(SelectEvent e){
-            distribucionAnimal.setAnimal((Animal)e.getObject());
-            
     }
-    
-     public void abrirBusquedaPlanta(){
-            
-        Map<String, Object> opciones =new HashMap<>();
+
+    public void recibirAnimales(SelectEvent e) {
+        distribucionAnimal.setAnimal((Animal) e.getObject());
+
+    }
+
+    public void abrirBusquedaPlanta() {
+
+        Map<String, Object> opciones = new HashMap<>();
         opciones.put("modal", true);
         opciones.put("contentWidth", 800);
         opciones.put("contentHeigth", 500);
-        
+
         PrimeFaces.current().dialog().openDynamic("seleccion_planta", opciones, null);
+    }
+
+    public void recibirPlanta(SelectEvent e) {
+        distribucionPlanta.setPlanta((Planta) e.getObject());
+    }
+
+    public void seleccionar(Object asig) {
+        if (asig instanceof Distribucionanimal) {
+            Distribucionanimal aux = (Distribucionanimal) asig;
+            distribucionAnimal = distribucionesAnimalesFacadeLocal.find(new DistribucionanimalPK(aux.getDistribucionanimalPK().getNumeroarea(),
+                    aux.getDistribucionanimalPK().getIdtipoarea(),
+                    aux.getDistribucionanimalPK().getIdanimal(),
+                    aux.getDistribucionanimalPK().getNombrecientifico()));
+
+        } else if (asig instanceof Distribucionplanta) {
+            Distribucionplanta asigP = (Distribucionplanta) asig;
+            distribucionPlanta = distribucionesPlantasFacadeLocal.find(new DistribucionplantaPK(asigP.getDistribucionplantaPK().getNumeroarea(),
+                    asigP.getDistribucionplantaPK().getIdtipoarea(),
+                    asigP.getPlanta().getPlantaPK().getIdplanta(),
+                    asigP.getPlanta().getPlantaPK().getNombrecientifico()));
         }
-    
-    
-    public void recibirPlanta(SelectEvent e){
-            distribucionPlanta.setPlanta((Planta)e.getObject());
+     esNuevo = false;
     }
-    
-    
-    public void seleccionar (Distribucionanimal asig){
-        
-        distribucionAnimal = distribucionesAnimalesFacadeLocal.find
-        (new DistribucionanimalPK(asig.getDistribucionanimalPK().getNumeroarea()
-                ,asig.getDistribucionanimalPK().getIdtipoarea(),
-        asig.getDistribucionanimalPK().getIdanimal(),
-        asig.getDistribucionanimalPK().getNombrecientifico()));
-        
-    }
-    
-        public void seleccionar (Distribucionplanta asigP){
-            
-        distribucionPlanta = distribucionesPlantasFacadeLocal.find(new DistribucionplantaPK(asigP.getDistribucionplantaPK().getNumeroarea(),
-        asigP.getDistribucionplantaPK().getIdtipoarea(),
-        asigP.getPlanta().getPlantaPK().getIdplanta(),
-        asigP.getPlanta().getPlantaPK().getNombrecientifico())) ;
-        
-    }
+
 }
