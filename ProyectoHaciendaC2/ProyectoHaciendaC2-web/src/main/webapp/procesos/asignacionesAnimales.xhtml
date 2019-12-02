@@ -25,10 +25,10 @@
                     </p:selectOneRadio>
                     <p:message for="selEstado" ></p:message>
                     <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{asignacionesManagedBean.nuevo()}" update="panelCentral"></p:commandButton>
+                    
+                    
+                    
                     <p:dataTable id="dtAreas" value="#{asignacionesManagedBean.distribucionesAnimalesList}" var="asig" paginator="true" rows="10">
-                        
-                        
-                        
                         <p:column headerText="Area" style="width: auto;" sortBy="#{asignacionesManagedBean.nombreArea}" filterBy="#{asig.area.tipoarea.nombrearea}" filterMatchMode="contains">
                             <h:outputLabel value="#{asig.area.tipoarea.nombrearea}"></h:outputLabel>
                         </p:column>
@@ -62,14 +62,16 @@
                         </p:column>
                     </p:dataTable>
                     
+                    
+                    
                     <p:dataTable id="dtAreasPlanta" value="#{asignacionesManagedBean.distribucionesPlantasList}" var="asigP" paginator="true" rows="10">
-                        <p:column headerText="Fecha de Asignacion" style="width: auto;" sortBy="#{asigP.fechaasigncion}" filterBy="#{asigP.fechaasigncion}" filterMatchMode="contains">
+                        <p:column headerText="Fecha de Asignacion" style="width: auto;"  >
                             <h:outputLabel value="#{asigP.fechaasigncion}"></h:outputLabel>
                         </p:column>
-                        <p:column headerText="Fecha de Salida" style="width: auto;" sortBy="#{asigP.fechasalida}" filterBy="#{asigP.fechasalida}" filterMatchMode="contains">
+                        <p:column headerText="Fecha de Salida" style="width: auto;"  >
                             <h:outputLabel value="#{asigP.fechasalida}"></h:outputLabel>
                         </p:column>
-                        <p:column headerText="Descripción de uso" style="width: auto;" sortBy="#{asigP.descripcionuso}" filterBy="#{asigP.descripcionuso}" filterMatchMode="contains">
+                        <p:column headerText="Descripción de uso" style="width: auto;" >
                             <h:outputLabel value="#{asigP.descripcionuso}"></h:outputLabel>
                         </p:column>
                         <p:column headerText="Editar">
@@ -138,7 +140,7 @@
                     </h:panelGrid>
                 </p:panel>
                 
-                <p:panel id="ingresos">
+                
                 <p:panel header="#{asignacionesManagedBean.esNuevo? 'Ingreso': 'Edicion'} de asignación" rendered="#{asignacionesManagedBean.distribucionPlanta!=null}">
                     <h:panelGrid columns="3">
                         <p:outputLabel for="calAsignacionP" value="Fecha de Asignacion: "></p:outputLabel>
@@ -160,45 +162,45 @@
 
                         <h:panelGrid id="panelAreaP" columns="2">
                             <p:outputLabel value="Número de area"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.numeroarea}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.areaPK.numeroarea}"></p:outputLabel>
                             <p:outputLabel value="Tipo de area"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.areaPK.idtipoarea}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.areaPK.idtipoarea}"></p:outputLabel>
                             <p:outputLabel value="Area"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.area}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.area}"></p:outputLabel>
                             <p:outputLabel value="Cercado"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.cercado}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.cercado}"></p:outputLabel>
                             <p:outputLabel value="Tipo de suelo"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.tiposuelo}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.tiposuelo}"></p:outputLabel>
                             <p:outputLabel value="Agua"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.agua}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.agua}"></p:outputLabel>
                             <p:outputLabel value="Disponible"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.area.disponible}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.area.disponible}"></p:outputLabel>
                         </h:panelGrid>
 
-                        <h:panelGrid columns="3">
+                        <h:panelGrid columns="3" id="panelPlanta">
                             <p:outputLabel value="Planta"></p:outputLabel>
-                            <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaAnimal()}">
-                                <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirAnimales}" update="panelAnimal"></p:ajax>
+                            <p:commandButton icon="ui-icon-search" action="#{asignacionesManagedBean.abrirBusquedaPlanta()}">
+                                <p:ajax event="dialogReturn" listener="#{asignacionesManagedBean.recibirPlanta(e)}" update="panelPlanta"></p:ajax>
                             </p:commandButton>
                         </h:panelGrid>
                         
                        
 
-                        <h:panelGrid id="panelAnimalP" columns="2">
-                            <p:outputLabel value="ID del animal"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.animalPK.idanimal}"></p:outputLabel>
+                        <h:panelGrid id="panelPlantaP" columns="2">
+                            <p:outputLabel value="ID de planta"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.planta.plantaPK.idplanta}"></p:outputLabel>
                             <p:outputLabel value="Nombre cientifico"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.animalPK.nombrecientifico}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.planta.plantaPK.nombrecientifico}"></p:outputLabel>
                             <p:outputLabel value="Nombre comun"></p:outputLabel>
-                            <p:outputLabel value="#{asignacionesManagedBean.distribucionAnimal.animal.tipodeanimal.tipodeanimalPK.nombrecomun}"></p:outputLabel>
+                            <p:outputLabel value="#{asignacionesManagedBean.distribucionPlanta.planta.tipoplanta.tipoplantaPK.nombrecomun}"></p:outputLabel>
                         </h:panelGrid>
                     </h:panelGrid>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" >
                         <p:commandButton value="Grabar" action="#{asignacionesManagedBean.grabar()}" update="panelCentral" ></p:commandButton>
                         <p:commandButton value="Cancelar" action="#{asignacionesManagedBean.cancelar()}" update="panelCentral" immediate="true"></p:commandButton>
                     </h:panelGrid>
                 </p:panel>
-                </p:panel>
+                
             </h:panelGrid>
             
         </h:form>

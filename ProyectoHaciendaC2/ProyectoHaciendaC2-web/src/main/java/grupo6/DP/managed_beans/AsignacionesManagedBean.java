@@ -45,6 +45,7 @@ public class AsignacionesManagedBean implements Serializable{
     private List<Area> areasList;
     private DistribucionanimalPK animalPK;
     private DistribucionplantaPK plantaPK;
+    private String NombreArea;
 
     
     @EJB
@@ -64,6 +65,7 @@ public class AsignacionesManagedBean implements Serializable{
     private AreaFacadeLocal areasFacadeLocal;
     private boolean esNuevo;
     private boolean Seleccion;
+    
     
 
     public List<Animal> getAnimalesList() {
@@ -220,6 +222,15 @@ public class AsignacionesManagedBean implements Serializable{
         areasList=null;
         areasList=areasFacadeLocal.findAll();
         esNuevo=false;
+        //NombreArea=areasFacadeLocal.find(this).getTipoarea().getNombrearea();
+    }
+
+    public String getNombreArea() {
+        return NombreArea;
+    }
+
+    public void setNombreArea(String NombreArea) {
+        this.NombreArea = NombreArea;
     }
     
     
@@ -266,7 +277,7 @@ public class AsignacionesManagedBean implements Serializable{
                 }
                     
             }else{
-                if(Seleccion)
+                if(distribucionAnimal!=null)
                     distribucionesAnimalesFacadeLocal.edit(distribucionAnimal);
                 else
                     distribucionesPlantasFacadeLocal.edit(distribucionPlanta);
@@ -274,7 +285,7 @@ public class AsignacionesManagedBean implements Serializable{
         }catch (Exception e){
             System.out.println(e.getMessage());
         }finally{
-            if(Seleccion){
+            if(distribucionAnimal!=null){
                 distribucionAnimal=null;
                 animalPK=null;
             }           
@@ -297,7 +308,7 @@ public class AsignacionesManagedBean implements Serializable{
     }
     
     public void cancelar(){
-        if(Seleccion)
+        if(distribucionAnimal!=null)
             distribucionAnimal=null;
         else
             distribucionPlanta=null;
@@ -315,7 +326,7 @@ public class AsignacionesManagedBean implements Serializable{
     
     
     public void recibirArea(SelectEvent e){
-        if(Seleccion)
+        if(distribucionAnimal!=null)
             distribucionAnimal.setArea((Area) e.getObject());
         else
             distribucionPlanta.setArea((Area) e.getObject());
@@ -335,7 +346,8 @@ public class AsignacionesManagedBean implements Serializable{
     
     
     public void recibirAnimales(SelectEvent e){
-            this.setAnimalesAsignarList((List<Animal>) e.getObject());
+            distribucionAnimal.setAnimal((Animal)e.getObject());
+            
     }
     
      public void abrirBusquedaPlanta(){
@@ -350,6 +362,26 @@ public class AsignacionesManagedBean implements Serializable{
     
     
     public void recibirPlanta(SelectEvent e){
-            this.setPlantasAsignarList((List<Planta>) e.getObject());
-    }        
+            distribucionPlanta.setPlanta((Planta)e.getObject());
+    }
+    
+    
+    public void seleccionar (Distribucionanimal asig){
+        
+        distribucionAnimal = distribucionesAnimalesFacadeLocal.find
+        (new DistribucionanimalPK(asig.getDistribucionanimalPK().getNumeroarea()
+                ,asig.getDistribucionanimalPK().getIdtipoarea(),
+        asig.getDistribucionanimalPK().getIdanimal(),
+        asig.getDistribucionanimalPK().getNombrecientifico()));
+        
+    }
+    
+        public void seleccionar (Distribucionplanta asigP){
+            
+        distribucionPlanta = distribucionesPlantasFacadeLocal.find(new DistribucionplantaPK(asigP.getDistribucionplantaPK().getNumeroarea(),
+        asigP.getDistribucionplantaPK().getIdtipoarea(),
+        asigP.getPlanta().getPlantaPK().getIdplanta(),
+        asigP.getPlanta().getPlantaPK().getNombrecientifico())) ;
+        
+    }
 }

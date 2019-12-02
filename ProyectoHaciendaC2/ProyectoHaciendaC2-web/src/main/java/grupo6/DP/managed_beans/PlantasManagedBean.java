@@ -26,7 +26,7 @@ public class PlantasManagedBean implements Serializable {
     @EJB
     private PlantaFacadeLocal plantaFacadeLocal;
     private List <Planta> plantasList;
-    private List <Planta> plantasAsignar;
+    Planta plantasAsignar;
     private List <Planta> temp;
     private boolean seleccionado;
 
@@ -41,7 +41,7 @@ public class PlantasManagedBean implements Serializable {
         seleccionado=false;
         plantasList=plantaFacadeLocal.findAll();
         temp=new ArrayList();
-        plantasAsignar=temp;
+        plantasAsignar=new Planta();
     }
 
     
@@ -64,11 +64,8 @@ public class PlantasManagedBean implements Serializable {
     }
     
     public void seleccionar(Planta planta){
-        if(seleccionado){
-             temp.add(planta);
-         }else{
-             //plantasAsignar.remove(planta);
-         }
+        plantasAsignar = planta;
+        agregar();
     }
     
      public void agregar (){

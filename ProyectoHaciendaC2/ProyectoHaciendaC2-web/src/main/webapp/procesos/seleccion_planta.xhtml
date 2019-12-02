@@ -18,14 +18,9 @@
                 <p:column headerText="Nombre Comun">
                     <h:outputLabel value="#{pla.tipoplanta.tipoplantaPK.nombrecomun}"></h:outputLabel>
                 </p:column>
-                 <p:column headerText="Seleccionar">
-                     <p:selectBooleanCheckbox value="#{plantasManagedBean.seleccionado}" itemLabel="Ajax">
-                         <p:ajax listener="#{plantasManagedBean.seleccionar(pla)}"/>
-                     </p:selectBooleanCheckbox>
-                 </p:column>
                 <p:column headerText="Seleccionar">
-                    <p:commandButton icon="ui-icon-check" action="#{plantasManagedBean.agregar()}"></p:commandButton>
-                </p:column>
+                    <p:commandButton icon="ui-icon-check" action="#{plantasManagedBean.seleccionar(pla)}"></p:commandButton>
+                 </p:column>
             </p:dataTable>
         </h:form>
     </h:body>
