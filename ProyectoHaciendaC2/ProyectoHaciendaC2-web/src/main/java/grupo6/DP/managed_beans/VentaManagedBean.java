@@ -171,6 +171,10 @@ public class VentaManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
+    
+    public void eliminar(Venta v){
+    ventaFacadeLocal.remove(v);
+    }
 
     public void nuevoProducto() {
         SalidaProducto salidaProducto = new SalidaProducto();
