@@ -31,7 +31,7 @@
                     <f:facet name="footer">
                         <h:panelGrid columns="4">
                             <p:outputLabel for="numFact" value="Número Factura:"></p:outputLabel>
-                            <p:inputMask id="numFact" mask="aaa-999:9" value="#{ventaMB.numFactura}"></p:inputMask>
+                            <p:inputMask id="numFact" mask="999-999:9" value="#{ventaMB.numFactura}"></p:inputMask>
                             <p:outputLabel for="SCliente" value="Cliente:"></p:outputLabel>
                             <p:selectOneMenu id="SCliente" value="#{ventaMB.cliente}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItems value="#{ventaMB.clientes}" var="cli" itemLabel="#{cli.cedula}" itemValue="#{cli}"></f:selectItems>
@@ -54,22 +54,22 @@
                     <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update="form1" />
                     <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update="form1" />
 
-                    <p:column headerText="Número de Factura">
+                    <p:column headerText="Número de Factura" filterBy="#{car.ventaPK.idfactura}" sortBy="#{car.ventaPK.idfactura}">
                         <p:outputLabel value="#{car.ventaPK.idfactura}"></p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Producto">
+                    <p:column headerText="Producto" filterBy="#{car.salidaProducto.procesamientoAnimal.producto.nombre}" sortBy="#{car.salidaProducto.procesamientoAnimal.producto.nombre}">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{car.salidaProducto.procesamientoAnimal.producto.nombre}" /></f:facet>
                             <f:facet name="input">
                                 <h:selectOneMenu value="#{car.salidaProducto}" style="width:100%">
-                                    <f:selectItems value="#{ventaMB.productosPreVenta}" var="man" itemLabel="#{man.procesamientoAnimal.producto.nombre}" itemValue="#{man}" />
+                                    <f:selectItems value="#{ventaMB.productosPreVenta}" var="prd" itemLabel="#{prd.procesamientoAnimal.producto.nombre}" itemValue="#{prd}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Cliente">
+                    <p:column headerText="Cliente" filterBy="#{car.cliente.cedula}" sortBy="#{car.cliente.cedula}">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{car.cliente.cedula}" /></f:facet>
                             <f:facet name="input">
@@ -95,7 +95,7 @@
                         <p:rowEditor />
                     </p:column>
                     <p:column style="width:35px">
-                        <p:commandButton value="X" action="#{ventaMB.eliminar(car)}">
+                        <p:commandButton value="X" action="#{ventaMB.eliminar(car)}" update="form1">
                             <p:confirm header="Alerta" message="¿Seguro que deseas eliminar esta venta?" icon="pi pi-exclamation-triangle" />
                         </p:commandButton>
                     </p:column>
