@@ -79,6 +79,7 @@ public class ProcesamientoAnimal implements Serializable {
     private List<SalidaProducto> salidaProductoList;
 
     public ProcesamientoAnimal() {
+        procesamientoAnimalPK = new ProcesamientoAnimalPK();
     }
 
     public ProcesamientoAnimal(ProcesamientoAnimalPK procesamientoAnimalPK) {
