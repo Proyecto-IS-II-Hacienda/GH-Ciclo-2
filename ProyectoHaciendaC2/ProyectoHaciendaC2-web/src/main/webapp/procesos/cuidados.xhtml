@@ -32,15 +32,15 @@
                         <p:column headerText="Animal" style="width: auto;" sortBy="#{asig.animal.animalPK.idanimal}" filterBy="#{asig.animal.animalPK.idanimal}" filterMatchMode="contains">
                             <h:outputLabel value="#{asig.animal.animalPK.idanimal}"></h:outputLabel>
                         </p:column>
-                        <p:column headerText="Insumo" style="width: auto;">
+                        <p:column headerText="Insumo" style="width: auto;" sortBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterMatchMode="contains">
                             <h:outputLabel value="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}"></h:outputLabel>
                         </p:column>
-                        <p:column headerText="Dicificacion" style="width: auto;" >
+                        <p:column headerText="Dicificacion" style="width: auto;" sortBy="#{asig.docificacion}" filterBy="#{asig.docificacion}" filterMatchMode="contains">
                             <h:outputLabel value="#{asig.docificacion}"></h:outputLabel>
                         </p:column>
                         <p:column headerText="Eliminar">
-                            <p:commandButton icon="ui-icon-trash" action="#{cuidadoMB.eliminar(asig)}" update="dtAreas">
-                                <p:confirm header="Confirmacion" message="Confirma que desea eliminar la asignacion seleccionada ?"></p:confirm>
+                            <p:commandButton icon="ui-icon-trash" action="#{cuidadoMB.eliminar(asig)}" update="form1">
+                                <p:confirm header="Confirmacion" message="Desea eliminar la asignacion seleccionada ?"></p:confirm>
                             </p:commandButton>
                         </p:column>
                         <p:column headerText="Editar">
@@ -56,15 +56,15 @@
                         <p:column headerText="Planta" style="width: auto;" sortBy="#{asig.planta.plantaPK.idplanta}" filterBy="#{asig.planta.plantaPK.idplanta}" filterMatchMode="contains">
                             <h:outputLabel value="#{asig.planta.plantaPK.idplanta}"></h:outputLabel>
                         </p:column>
-                        <p:column headerText="Insumo" style="width: auto;">
-                            <h:outputLabel value="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}"></h:outputLabel>
+                        <p:column headerText="Insumo" style="width: auto;" sortBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" ></h:outputLabel>
                         </p:column>
-                        <p:column headerText="Dicificacion" style="width: auto;" >
+                        <p:column headerText="Dicificacion" style="width: auto;" sortBy="#{asig.docificacion}" filterBy="#{asig.docificacion}" filterMatchMode="contains">
                             <h:outputLabel value="#{asig.docificacion}"></h:outputLabel>
                         </p:column>
                         <p:column headerText="Eliminar">
-                            <p:commandButton icon="ui-icon-trash" action="#{cuidadoMB.eliminar(asig)}" update="dtAreasPlanta">
-                                <p:confirm header="Confirmacion" message="Confirma que desea eliminar la asignacion seleccionada ?"></p:confirm>
+                            <p:commandButton icon="ui-icon-trash" action="#{cuidadoMB.eliminar(asig)}" update="form1">
+                                <p:confirm header="Alerta" message="desea eliminar la asignacion seleccionada?"></p:confirm>
                             </p:commandButton>
                         </p:column>
                         <p:column headerText="Editar">
@@ -92,7 +92,7 @@
                         <h:panelGrid id="panelAnimal" columns="2">
                             <p:outputLabel value="Animal"></p:outputLabel>
                             <p:commandButton icon="ui-icon-circle-triangle-w" action="#{cuidadoMB.abrirBusquedaAnimal()}" immediate="true">
-                                <p:ajax event="dialogReturn" listener="#{cuidadoMB.recibirDialogo}" update="form1"></p:ajax>
+                                <p:ajax event="dialogReturn" listener="#{cuidadoMB.recibirDialogo}" update="panelAnimal"></p:ajax>
                             </p:commandButton>                            
                             <p:outputLabel value="ID"></p:outputLabel>
                             <p:outputLabel value="#{cuidadoMB.cuidadoanimal.animal.animalPK.idanimal}"></p:outputLabel>
@@ -127,7 +127,7 @@
                         <h:panelGrid id="panelPlanta" columns="2">
                             <p:outputLabel value="Planta"></p:outputLabel>
                             <p:commandButton icon="ui-icon-circle-triangle-w" action="#{cuidadoMB.abrirBusquedaPlanta()}" immediate="true">
-                                <p:ajax event="dialogReturn" listener="#{cuidadoMB.recibirDialogo}" update="form1"></p:ajax>
+                                <p:ajax event="dialogReturn" listener="#{cuidadoMB.recibirDialogo}" update="panelPlanta"></p:ajax>
                             </p:commandButton>                            
                             <p:outputLabel value="ID"></p:outputLabel>
                             <p:outputLabel value="#{cuidadoMB.cuidadoplanta.planta.plantaPK.idplanta}"></p:outputLabel>
@@ -145,7 +145,10 @@
                 </p:panel>
 
             </h:panelGrid>
-
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>  
         </h:form>
     </h:body>
 </html>

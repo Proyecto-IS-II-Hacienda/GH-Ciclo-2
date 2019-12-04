@@ -280,9 +280,9 @@ public class CuidadosManagedBean implements Serializable {
 
     public void seleccionar(Object c) {
         if (c instanceof Cuidadoanimal) {
-            cuidadoanimal = cuidadoanimalFacadeLocal.find((Cuidadoanimal) c);
+            cuidadoanimal = cuidadoanimalFacadeLocal.find(((Cuidadoanimal) c).getIdcuidado());
         } else if (c instanceof Cuidadoplanta) {
-            cuidadoplanta = cuidadoplantaFacadeLocal.find((Cuidadoplanta) c);
+            cuidadoplanta = cuidadoplantaFacadeLocal.find(((Cuidadoplanta) c).getIdcuidado());
         }
         esNuevo = false;
     }
