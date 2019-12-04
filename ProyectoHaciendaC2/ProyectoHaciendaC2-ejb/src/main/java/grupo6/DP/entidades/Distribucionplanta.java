@@ -8,6 +8,10 @@ package grupo6.DP.entidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -96,17 +100,28 @@ public class Distribucionplanta implements Serializable {
     public Date getFechaasigncion() {
         return fechaasigncion;
     }
-
-    public void setFechaasigncion(Date fechaasigncion) {
-        this.fechaasigncion = fechaasigncion;
-    }
-
     public Date getFechasalida() {
         return fechasalida;
     }
+    
+    public void setFechaasignacion(Date fechaasignacion) {
+        Date aux = this.fechaasigncion;
+        this.fechaasigncion = fechaasignacion;
+        
+        if(validarFechas())
+          this.fechaasigncion = aux;
 
+    }
+
+  
     public void setFechasalida(Date fechasalida) {
+        Date aux = this.fechasalida;
         this.fechasalida = fechasalida;
+        
+        if(validarFechas())
+          this.fechasalida = aux;
+        
+
     }
 
     public String getDescripcionuso() {
@@ -156,6 +171,49 @@ public class Distribucionplanta implements Serializable {
     @Override
     public String toString() {
         return "grupo6.DP.entidades.Distribucionplanta[ distribucionplantaPK=" + distribucionplantaPK + " ]";
+    }
+    
+                public boolean validarFechas()  {
+        boolean salir=false;
+        
+        
+            try {
+                
+                if (isMayorFechaHoy(this.fechaasigncion)
+                        || isMayorFechaHoy(this.fechasalida)) {
+                    salir = true;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No se guardó la asignación, se pueden hacer asignaciones solamente para fechas superiores o actuales "));
+                }
+                if (isMayor(this.fechaasigncion, this.fechasalida)) {
+                    salir = true;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No se guardó la asignación, la fecha de asignación debe ser menor a la de salida"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Distribucionanimal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
+        return salir;
+    }
+        
+        public Boolean isMayorFechaHoy(Date fecha) throws Exception {
+        Date hoy = new Date();
+        Boolean resultado = false;
+
+        if (fecha != null && fecha.before(hoy)) {
+            resultado = true;
+        }
+
+        return resultado;
+    }
+        
+        public Boolean isMayor(Date fechaInicial, Date fechaFinal) throws Exception {
+        Boolean resultado = false;
+            if (fechaInicial.after(fechaFinal) || fechaInicial.equals(fechaFinal)) 
+            resultado=true;
+        
+        return resultado;
+        
     }
     
 }
