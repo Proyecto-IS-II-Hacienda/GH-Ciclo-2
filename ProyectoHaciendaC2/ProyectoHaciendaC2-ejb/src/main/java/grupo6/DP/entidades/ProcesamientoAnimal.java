@@ -24,23 +24,26 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
-@Table(name = "PROCESAMIENTO_ANIMAL")
+@Table(name = "PROCESAMIENTOANIMAL")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProcesamientoAnimal.findAll", query = "SELECT p FROM ProcesamientoAnimal p")
-    , @NamedQuery(name = "ProcesamientoAnimal.findByNumeroProcesamiento", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.procesamientoAnimalPK.numeroProcesamiento = :numeroProcesamiento")
+    , @NamedQuery(name = "ProcesamientoAnimal.findByNumeroprocesamiento", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.procesamientoAnimalPK.numeroprocesamiento = :numeroprocesamiento")
     , @NamedQuery(name = "ProcesamientoAnimal.findByFecha", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.procesamientoAnimalPK.fecha = :fecha")
     , @NamedQuery(name = "ProcesamientoAnimal.findByCodProducto", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.procesamientoAnimalPK.codProducto = :codProducto")
     , @NamedQuery(name = "ProcesamientoAnimal.findByMortal", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.mortal = :mortal")
-    , @NamedQuery(name = "ProcesamientoAnimal.findByFechaCaducidad", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.fechaCaducidad = :fechaCaducidad")})
+    , @NamedQuery(name = "ProcesamientoAnimal.findByFechacaducidad", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.fechacaducidad = :fechacaducidad")
+    , @NamedQuery(name = "ProcesamientoAnimal.findByCantidad", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.cantidad = :cantidad")
+    , @NamedQuery(name = "ProcesamientoAnimal.findByUnidades", query = "SELECT p FROM ProcesamientoAnimal p WHERE p.unidades = :unidades")})
 public class ProcesamientoAnimal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,19 +55,28 @@ public class ProcesamientoAnimal implements Serializable {
     private BigInteger mortal;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_CADUCIDAD")
+    @Column(name = "FECHACADUCIDAD")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCaducidad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesamientoAnimal")
-    private List<SalidaProductos> salidaProductosList;
+    private Date fechacaducidad;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CANTIDAD")
+    private double cantidad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5)
+    @Column(name = "UNIDADES")
+    private String unidades;
     @JoinColumns({
-        @JoinColumn(name = "ID_ANIMAL", referencedColumnName = "ID_ANIMAL")
-        , @JoinColumn(name = "NOMBRE_CIENTIFICO", referencedColumnName = "NOMBRE_CIENTIFICO")})
+        @JoinColumn(name = "IDANIMAL", referencedColumnName = "IDANIMAL")
+        , @JoinColumn(name = "NOMBRECIENTIFICO", referencedColumnName = "NOMBRECIENTIFICO")})
     @ManyToOne(optional = false)
-    private Animales animales;
+    private Animal animal;
     @JoinColumn(name = "COD_PRODUCTO", referencedColumnName = "COD_PRODUCTO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Productos productos;
+    private Producto producto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "procesamientoAnimal")
+    private List<SalidaProducto> salidaProductoList;
 
     public ProcesamientoAnimal() {
         procesamientoAnimalPK = new ProcesamientoAnimalPK();
@@ -74,14 +86,16 @@ public class ProcesamientoAnimal implements Serializable {
         this.procesamientoAnimalPK = procesamientoAnimalPK;
     }
 
-    public ProcesamientoAnimal(ProcesamientoAnimalPK procesamientoAnimalPK, BigInteger mortal, Date fechaCaducidad) {
+    public ProcesamientoAnimal(ProcesamientoAnimalPK procesamientoAnimalPK, BigInteger mortal, Date fechacaducidad, double cantidad, String unidades) {
         this.procesamientoAnimalPK = procesamientoAnimalPK;
         this.mortal = mortal;
-        this.fechaCaducidad = fechaCaducidad;
+        this.fechacaducidad = fechacaducidad;
+        this.cantidad = cantidad;
+        this.unidades = unidades;
     }
 
-    public ProcesamientoAnimal(BigInteger numeroProcesamiento, Date fecha, String codProducto) {
-        this.procesamientoAnimalPK = new ProcesamientoAnimalPK(numeroProcesamiento, fecha, codProducto);
+    public ProcesamientoAnimal(BigInteger numeroprocesamiento, Date fecha, String codProducto) {
+        this.procesamientoAnimalPK = new ProcesamientoAnimalPK(numeroprocesamiento, fecha, codProducto);
     }
 
     public ProcesamientoAnimalPK getProcesamientoAnimalPK() {
@@ -100,37 +114,53 @@ public class ProcesamientoAnimal implements Serializable {
         this.mortal = mortal;
     }
 
-    public Date getFechaCaducidad() {
-        return fechaCaducidad;
+    public Date getFechacaducidad() {
+        return fechacaducidad;
     }
 
-    public void setFechaCaducidad(Date fechaCaducidad) {
-        this.fechaCaducidad = fechaCaducidad;
+    public void setFechacaducidad(Date fechacaducidad) {
+        this.fechacaducidad = fechacaducidad;
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(String unidades) {
+        this.unidades = unidades;
+    }
+
+    public Animal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     @XmlTransient
-    public List<SalidaProductos> getSalidaProductosList() {
-        return salidaProductosList;
+    public List<SalidaProducto> getSalidaProductoList() {
+        return salidaProductoList;
     }
 
-    public void setSalidaProductosList(List<SalidaProductos> salidaProductosList) {
-        this.salidaProductosList = salidaProductosList;
-    }
-
-    public Animales getAnimales() {
-        return animales;
-    }
-
-    public void setAnimales(Animales animales) {
-        this.animales = animales;
-    }
-
-    public Productos getProductos() {
-        return productos;
-    }
-
-    public void setProductos(Productos productos) {
-        this.productos = productos;
+    public void setSalidaProductoList(List<SalidaProducto> salidaProductoList) {
+        this.salidaProductoList = salidaProductoList;
     }
 
     @Override
@@ -155,7 +185,7 @@ public class ProcesamientoAnimal implements Serializable {
 
     @Override
     public String toString() {
-        return "grupo6.DP.ProcesamientoAnimal[ procesamientoAnimalPK=" + procesamientoAnimalPK + " ]";
+        return "grupo6.DP.entidades.ProcesamientoAnimal[ procesamientoAnimalPK=" + procesamientoAnimalPK + " ]";
     }
     
 }

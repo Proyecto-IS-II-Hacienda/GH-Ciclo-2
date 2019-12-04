@@ -26,20 +26,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
-@Table(name = "PROCESAMIENTO_PLANTA")
+@Table(name = "PROCESAMIENTOPLANTA")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProcesamientoPlanta.findAll", query = "SELECT p FROM ProcesamientoPlanta p")
-    , @NamedQuery(name = "ProcesamientoPlanta.findByNumeroProcesamiento", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.procesamientoPlantaPK.numeroProcesamiento = :numeroProcesamiento")
+    , @NamedQuery(name = "ProcesamientoPlanta.findByNumeroprocesamiento", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.procesamientoPlantaPK.numeroprocesamiento = :numeroprocesamiento")
     , @NamedQuery(name = "ProcesamientoPlanta.findByFecha", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.procesamientoPlantaPK.fecha = :fecha")
     , @NamedQuery(name = "ProcesamientoPlanta.findByCodProducto", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.procesamientoPlantaPK.codProducto = :codProducto")
     , @NamedQuery(name = "ProcesamientoPlanta.findByMortal", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.mortal = :mortal")
     , @NamedQuery(name = "ProcesamientoPlanta.findByCantidad", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.cantidad = :cantidad")
     , @NamedQuery(name = "ProcesamientoPlanta.findByUnidad", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.unidad = :unidad")
-    , @NamedQuery(name = "ProcesamientoPlanta.findByFechaCaducidad", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.fechaCaducidad = :fechaCaducidad")})
+    , @NamedQuery(name = "ProcesamientoPlanta.findByFechacaducidad", query = "SELECT p FROM ProcesamientoPlanta p WHERE p.fechacaducidad = :fechacaducidad")})
 public class ProcesamientoPlanta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,17 +60,17 @@ public class ProcesamientoPlanta implements Serializable {
     private String unidad;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_CADUCIDAD")
+    @Column(name = "FECHACADUCIDAD")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCaducidad;
+    private Date fechacaducidad;
     @JoinColumns({
-        @JoinColumn(name = "ID_PLANTA", referencedColumnName = "ID_PLANTA")
-        , @JoinColumn(name = "NOMBRE_CIENTIFICO", referencedColumnName = "NOMBRE_CIENTIFICO")})
+        @JoinColumn(name = "IDPLANTA", referencedColumnName = "IDPLANTA")
+        , @JoinColumn(name = "NOMBRECIENTIFICO", referencedColumnName = "NOMBRECIENTIFICO")})
     @ManyToOne(optional = false)
-    private Plantas plantas;
+    private Planta planta;
     @JoinColumn(name = "COD_PRODUCTO", referencedColumnName = "COD_PRODUCTO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Productos productos;
+    private Producto producto;
 
     public ProcesamientoPlanta() {
     }
@@ -79,16 +79,16 @@ public class ProcesamientoPlanta implements Serializable {
         this.procesamientoPlantaPK = procesamientoPlantaPK;
     }
 
-    public ProcesamientoPlanta(ProcesamientoPlantaPK procesamientoPlantaPK, BigInteger mortal, double cantidad, String unidad, Date fechaCaducidad) {
+    public ProcesamientoPlanta(ProcesamientoPlantaPK procesamientoPlantaPK, BigInteger mortal, double cantidad, String unidad, Date fechacaducidad) {
         this.procesamientoPlantaPK = procesamientoPlantaPK;
         this.mortal = mortal;
         this.cantidad = cantidad;
         this.unidad = unidad;
-        this.fechaCaducidad = fechaCaducidad;
+        this.fechacaducidad = fechacaducidad;
     }
 
-    public ProcesamientoPlanta(BigInteger numeroProcesamiento, Date fecha, String codProducto) {
-        this.procesamientoPlantaPK = new ProcesamientoPlantaPK(numeroProcesamiento, fecha, codProducto);
+    public ProcesamientoPlanta(BigInteger numeroprocesamiento, Date fecha, String codProducto) {
+        this.procesamientoPlantaPK = new ProcesamientoPlantaPK(numeroprocesamiento, fecha, codProducto);
     }
 
     public ProcesamientoPlantaPK getProcesamientoPlantaPK() {
@@ -123,28 +123,28 @@ public class ProcesamientoPlanta implements Serializable {
         this.unidad = unidad;
     }
 
-    public Date getFechaCaducidad() {
-        return fechaCaducidad;
+    public Date getFechacaducidad() {
+        return fechacaducidad;
     }
 
-    public void setFechaCaducidad(Date fechaCaducidad) {
-        this.fechaCaducidad = fechaCaducidad;
+    public void setFechacaducidad(Date fechacaducidad) {
+        this.fechacaducidad = fechacaducidad;
     }
 
-    public Plantas getPlantas() {
-        return plantas;
+    public Planta getPlanta() {
+        return planta;
     }
 
-    public void setPlantas(Plantas plantas) {
-        this.plantas = plantas;
+    public void setPlanta(Planta planta) {
+        this.planta = planta;
     }
 
-    public Productos getProductos() {
-        return productos;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProductos(Productos productos) {
-        this.productos = productos;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     @Override
@@ -169,7 +169,7 @@ public class ProcesamientoPlanta implements Serializable {
 
     @Override
     public String toString() {
-        return "grupo6.DP.ProcesamientoPlanta[ procesamientoPlantaPK=" + procesamientoPlantaPK + " ]";
+        return "grupo6.DP.entidades.ProcesamientoPlanta[ procesamientoPlantaPK=" + procesamientoPlantaPK + " ]";
     }
     
 }

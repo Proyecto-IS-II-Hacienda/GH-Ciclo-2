@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
 @Table(name = "LOGS")
@@ -158,7 +158,7 @@ public class Logs implements Serializable {
 
     @Override
     public String toString() {
-        return "grupo6.DP.Logs[ idLog=" + idLog + " ]";
+        return "grupo6.DP.entidades.Logs[ idLog=" + idLog + " ]";
     }
     
 }

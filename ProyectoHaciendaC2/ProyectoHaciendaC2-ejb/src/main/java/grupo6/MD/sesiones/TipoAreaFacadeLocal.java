@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Local
 public interface TipoAreaFacadeLocal {

@@ -18,15 +18,15 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Embeddable
 public class ProcesamientoAnimalPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "NUMERO_PROCESAMIENTO")
-    private BigInteger numeroProcesamiento;
+    @Column(name = "NUMEROPROCESAMIENTO")
+    private BigInteger numeroprocesamiento;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA")
@@ -41,18 +41,18 @@ public class ProcesamientoAnimalPK implements Serializable {
     public ProcesamientoAnimalPK() {
     }
 
-    public ProcesamientoAnimalPK(BigInteger numeroProcesamiento, Date fecha, String codProducto) {
-        this.numeroProcesamiento = numeroProcesamiento;
+    public ProcesamientoAnimalPK(BigInteger numeroprocesamiento, Date fecha, String codProducto) {
+        this.numeroprocesamiento = numeroprocesamiento;
         this.fecha = fecha;
         this.codProducto = codProducto;
     }
 
-    public BigInteger getNumeroProcesamiento() {
-        return numeroProcesamiento;
+    public BigInteger getNumeroprocesamiento() {
+        return numeroprocesamiento;
     }
 
-    public void setNumeroProcesamiento(BigInteger numeroProcesamiento) {
-        this.numeroProcesamiento = numeroProcesamiento;
+    public void setNumeroprocesamiento(BigInteger numeroprocesamiento) {
+        this.numeroprocesamiento = numeroprocesamiento;
     }
 
     public Date getFecha() {
@@ -74,7 +74,7 @@ public class ProcesamientoAnimalPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (numeroProcesamiento != null ? numeroProcesamiento.hashCode() : 0);
+        hash += (numeroprocesamiento != null ? numeroprocesamiento.hashCode() : 0);
         hash += (fecha != null ? fecha.hashCode() : 0);
         hash += (codProducto != null ? codProducto.hashCode() : 0);
         return hash;
@@ -87,7 +87,7 @@ public class ProcesamientoAnimalPK implements Serializable {
             return false;
         }
         ProcesamientoAnimalPK other = (ProcesamientoAnimalPK) object;
-        if ((this.numeroProcesamiento == null && other.numeroProcesamiento != null) || (this.numeroProcesamiento != null && !this.numeroProcesamiento.equals(other.numeroProcesamiento))) {
+        if ((this.numeroprocesamiento == null && other.numeroprocesamiento != null) || (this.numeroprocesamiento != null && !this.numeroprocesamiento.equals(other.numeroprocesamiento))) {
             return false;
         }
         if ((this.fecha == null && other.fecha != null) || (this.fecha != null && !this.fecha.equals(other.fecha))) {
@@ -101,7 +101,7 @@ public class ProcesamientoAnimalPK implements Serializable {
 
     @Override
     public String toString() {
-        return "grupo6.DP.ProcesamientoAnimalPK[ numeroProcesamiento=" + numeroProcesamiento + ", fecha=" + fecha + ", codProducto=" + codProducto + " ]";
+        return "grupo6.DP.entidades.ProcesamientoAnimalPK[ numeroprocesamiento=" + numeroprocesamiento + ", fecha=" + fecha + ", codProducto=" + codProducto + " ]";
     }
     
 }

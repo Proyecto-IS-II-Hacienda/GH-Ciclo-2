@@ -23,14 +23,14 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
-@Table(name = "TIPO_ADMINISTRACION_INSUMO")
+@Table(name = "TIPOADMINISTRACIONINSUMO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TipoAdministracionInsumo.findAll", query = "SELECT t FROM TipoAdministracionInsumo t")
-    , @NamedQuery(name = "TipoAdministracionInsumo.findByIdAdmProd", query = "SELECT t FROM TipoAdministracionInsumo t WHERE t.idAdmProd = :idAdmProd")
+    , @NamedQuery(name = "TipoAdministracionInsumo.findByIdadmins", query = "SELECT t FROM TipoAdministracionInsumo t WHERE t.idadmins = :idadmins")
     , @NamedQuery(name = "TipoAdministracionInsumo.findByNombre", query = "SELECT t FROM TipoAdministracionInsumo t WHERE t.nombre = :nombre")})
 public class TipoAdministracionInsumo implements Serializable {
 
@@ -38,34 +38,34 @@ public class TipoAdministracionInsumo implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_ADM_PROD")
-    private Integer idAdmProd;
+    @Column(name = "IDADMINS")
+    private Integer idadmins;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "NOMBRE")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAdmProd")
-    private List<Insumos> insumosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idadmins")
+    private List<Insumo> insumoList;
 
     public TipoAdministracionInsumo() {
     }
 
-    public TipoAdministracionInsumo(Integer idAdmProd) {
-        this.idAdmProd = idAdmProd;
+    public TipoAdministracionInsumo(Integer idadmins) {
+        this.idadmins = idadmins;
     }
 
-    public TipoAdministracionInsumo(Integer idAdmProd, String nombre) {
-        this.idAdmProd = idAdmProd;
+    public TipoAdministracionInsumo(Integer idadmins, String nombre) {
+        this.idadmins = idadmins;
         this.nombre = nombre;
     }
 
-    public Integer getIdAdmProd() {
-        return idAdmProd;
+    public Integer getIdadmins() {
+        return idadmins;
     }
 
-    public void setIdAdmProd(Integer idAdmProd) {
-        this.idAdmProd = idAdmProd;
+    public void setIdadmins(Integer idadmins) {
+        this.idadmins = idadmins;
     }
 
     public String getNombre() {
@@ -77,18 +77,18 @@ public class TipoAdministracionInsumo implements Serializable {
     }
 
     @XmlTransient
-    public List<Insumos> getInsumosList() {
-        return insumosList;
+    public List<Insumo> getInsumoList() {
+        return insumoList;
     }
 
-    public void setInsumosList(List<Insumos> insumosList) {
-        this.insumosList = insumosList;
+    public void setInsumoList(List<Insumo> insumoList) {
+        this.insumoList = insumoList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idAdmProd != null ? idAdmProd.hashCode() : 0);
+        hash += (idadmins != null ? idadmins.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +99,7 @@ public class TipoAdministracionInsumo implements Serializable {
             return false;
         }
         TipoAdministracionInsumo other = (TipoAdministracionInsumo) object;
-        if ((this.idAdmProd == null && other.idAdmProd != null) || (this.idAdmProd != null && !this.idAdmProd.equals(other.idAdmProd))) {
+        if ((this.idadmins == null && other.idadmins != null) || (this.idadmins != null && !this.idadmins.equals(other.idadmins))) {
             return false;
         }
         return true;
@@ -107,7 +107,7 @@ public class TipoAdministracionInsumo implements Serializable {
 
     @Override
     public String toString() {
-        return "grupo6.DP.TipoAdministracionInsumo[ idAdmProd=" + idAdmProd + " ]";
+        return "grupo6.DP.entidades.TipoAdministracionInsumo[ idadmins=" + idadmins + " ]";
     }
     
 }

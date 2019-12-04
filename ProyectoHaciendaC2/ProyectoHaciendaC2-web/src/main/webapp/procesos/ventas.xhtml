@@ -1,12 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+
+
+        <title>Ventas</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form id="form1">     
+            <p:messages></p:messages>
+            <p:panel id="toggleable" header="Nueva Venta" toggleable="true" toggleSpeed="400" widgetVar="panel" style="margin-bottom:20px" toggleableHeader="true" collapsed="true" >
+                <p:dataTable id="cars1" widgetVar="cars1" var="car" value="#{ventaMB.productosPreVenta}" editable="true" style="margin-bottom:20px">
+                    <f:facet name="header">
+                        Se venderá:
+                    </f:facet>
+
+                    <p:column headerText="Producto" filterBy="#{car.procesamientoAnimal.producto.nombre}" sortBy="#{car.procesamientoAnimal.producto.nombre}">
+                        <p:outputLabel value ="#{car.procesamientoAnimal.producto.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad">
+                        <p:inputNumber id="txt2" value="#{car.cantidad}" />
+                        <p:slider for="txt2"  minValue="0" maxValue="#{car.procesamientoAnimal.cantidad}"  step="0.01"/>
+                        <p:outputLabel value ="/#{car.procesamientoAnimal.cantidad}"/>
+                    </p:column>  
+                    <f:facet name="footer">
+                        <h:panelGrid columns="4">
+                            <p:outputLabel for="numFact" value="Número Factura:"></p:outputLabel>
+                            <p:inputMask id="numFact" mask="999-999:9" value="#{ventaMB.numFactura}"></p:inputMask>
+                            <p:outputLabel for="SCliente" value="Cliente:"></p:outputLabel>
+                            <p:selectOneMenu id="SCliente" value="#{ventaMB.cliente}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItems value="#{ventaMB.clientes}" var="cli" itemLabel="#{cli.cedula}" itemValue="#{cli}"></f:selectItems>
+                            </p:selectOneMenu>
+                            <f:facet name="footer">
+                                <p:commandButton value="Vender" action="#{ventaMB.vender()}" update="form1"></p:commandButton>
+                            </f:facet>
+                        </h:panelGrid>
+                    </f:facet>
+                </p:dataTable>            
+            </p:panel>
+            <p:panel>
+
+
+                <p:dataTable id="cars2" var="car" value="#{ventaMB.ventas}" editable="true" style="margin-bottom:20px">
+                    <f:facet name="header">
+                        Ventas registradas
+                    </f:facet>
+
+                    <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update="form1" />
+                    <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update="form1" />
+
+                    <p:column headerText="Número de Factura" filterBy="#{car.ventaPK.idfactura}" sortBy="#{car.ventaPK.idfactura}">
+                        <p:outputLabel value="#{car.ventaPK.idfactura}"></p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Producto" filterBy="#{car.salidaProducto.procesamientoAnimal.producto.nombre}" sortBy="#{car.salidaProducto.procesamientoAnimal.producto.nombre}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.salidaProducto.procesamientoAnimal.producto.nombre}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{car.salidaProducto}" style="width:100%">
+                                    <f:selectItems value="#{ventaMB.productosPreVenta}" var="prd" itemLabel="#{prd.procesamientoAnimal.producto.nombre}" itemValue="#{prd}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Cliente" filterBy="#{car.cliente.cedula}" sortBy="#{car.cliente.cedula}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.cliente.cedula}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{car.cliente}" style="width:100%" converter="omnifaces.SelectItemsConverter">
+                                    <f:selectItems value="#{ventaMB.clientes}" var="man" itemLabel="#{man.cedula}" itemValue="#{man}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Cantidad">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{car.salidaProducto.cantidad}" /></f:facet>
+                            <f:facet name="input">
+                                <p:inputNumber id="txt2" value="#{car.salidaProducto.cantidad}" />
+                                <p:slider for="txt2"  minValue="0" maxValue="#{car.salidaProducto.procesamientoAnimal.cantidad}"  step="0.01"/>
+                                <p:outputLabel value ="/#{car.salidaProducto.procesamientoAnimal.cantidad}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:35px">
+                        <p:rowEditor />
+                    </p:column>
+                    <p:column style="width:35px">
+                        <p:commandButton value="X" action="#{ventaMB.eliminar(car)}" update="form1">
+                            <p:confirm header="Alerta" message="¿Seguro que deseas eliminar esta venta?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+
+            </p:panel>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>  
+        </h:form>
     </h:body>
 </html>
 

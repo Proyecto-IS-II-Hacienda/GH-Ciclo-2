@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Stateless
 public class ProcesamientoPlantaFacade extends AbstractFacade<ProcesamientoPlanta> implements ProcesamientoPlantaFacadeLocal {

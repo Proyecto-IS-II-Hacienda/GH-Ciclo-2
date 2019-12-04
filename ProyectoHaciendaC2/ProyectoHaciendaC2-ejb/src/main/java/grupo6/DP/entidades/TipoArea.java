@@ -23,15 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Marcelo_Echeverria
+ * @author marce
  */
 @Entity
-@Table(name = "TIPO_AREA")
+@Table(name = "TIPOAREA")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TipoArea.findAll", query = "SELECT t FROM TipoArea t")
-    , @NamedQuery(name = "TipoArea.findByIdTipoArea", query = "SELECT t FROM TipoArea t WHERE t.idTipoArea = :idTipoArea")
-    , @NamedQuery(name = "TipoArea.findByNombreArea", query = "SELECT t FROM TipoArea t WHERE t.nombreArea = :nombreArea")})
+    , @NamedQuery(name = "TipoArea.findByIdtipoarea", query = "SELECT t FROM TipoArea t WHERE t.idtipoarea = :idtipoarea")
+    , @NamedQuery(name = "TipoArea.findByNombrearea", query = "SELECT t FROM TipoArea t WHERE t.nombrearea = :nombrearea")})
 public class TipoArea implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,57 +39,57 @@ public class TipoArea implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
-    @Column(name = "ID_TIPO_AREA")
-    private String idTipoArea;
+    @Column(name = "IDTIPOAREA")
+    private String idtipoarea;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "NOMBRE_AREA")
-    private String nombreArea;
+    @Column(name = "NOMBREAREA")
+    private String nombrearea;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoArea")
-    private List<Areas> areasList;
+    private List<Area> areaList;
 
     public TipoArea() {
     }
 
-    public TipoArea(String idTipoArea) {
-        this.idTipoArea = idTipoArea;
+    public TipoArea(String idtipoarea) {
+        this.idtipoarea = idtipoarea;
     }
 
-    public TipoArea(String idTipoArea, String nombreArea) {
-        this.idTipoArea = idTipoArea;
-        this.nombreArea = nombreArea;
+    public TipoArea(String idtipoarea, String nombrearea) {
+        this.idtipoarea = idtipoarea;
+        this.nombrearea = nombrearea;
     }
 
-    public String getIdTipoArea() {
-        return idTipoArea;
+    public String getIdtipoarea() {
+        return idtipoarea;
     }
 
-    public void setIdTipoArea(String idTipoArea) {
-        this.idTipoArea = idTipoArea;
+    public void setIdtipoarea(String idtipoarea) {
+        this.idtipoarea = idtipoarea;
     }
 
-    public String getNombreArea() {
-        return nombreArea;
+    public String getNombrearea() {
+        return nombrearea;
     }
 
-    public void setNombreArea(String nombreArea) {
-        this.nombreArea = nombreArea;
+    public void setNombrearea(String nombrearea) {
+        this.nombrearea = nombrearea;
     }
 
     @XmlTransient
-    public List<Areas> getAreasList() {
-        return areasList;
+    public List<Area> getAreaList() {
+        return areaList;
     }
 
-    public void setAreasList(List<Areas> areasList) {
-        this.areasList = areasList;
+    public void setAreaList(List<Area> areaList) {
+        this.areaList = areaList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idTipoArea != null ? idTipoArea.hashCode() : 0);
+        hash += (idtipoarea != null ? idtipoarea.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +100,7 @@ public class TipoArea implements Serializable {
             return false;
         }
         TipoArea other = (TipoArea) object;
-        if ((this.idTipoArea == null && other.idTipoArea != null) || (this.idTipoArea != null && !this.idTipoArea.equals(other.idTipoArea))) {
+        if ((this.idtipoarea == null && other.idtipoarea != null) || (this.idtipoarea != null && !this.idtipoarea.equals(other.idtipoarea))) {
             return false;
         }
         return true;
@@ -108,7 +108,7 @@ public class TipoArea implements Serializable {
 
     @Override
     public String toString() {
-        return "grupo6.DP.TipoArea[ idTipoArea=" + idTipoArea + " ]";
+        return "grupo6.DP.entidades.TipoArea[ idtipoarea=" + idtipoarea + " ]";
     }
     
 }
