@@ -28,6 +28,7 @@ public class AnimalesManagedBean implements Serializable {
     private List <Animal> animalesList;
     private List <Animal> animalesAsignar;
     private List <Animal> temp;
+    private Animal animalAsignar;
     private boolean seleccionado;
     
 
@@ -43,6 +44,7 @@ public class AnimalesManagedBean implements Serializable {
         animalesList=animalesFacadeLocal.findAll();
         temp=new ArrayList();
         animalesAsignar=temp;
+        animalAsignar=null;
     }
 
     public boolean isSeleccionado() {
@@ -69,7 +71,16 @@ public class AnimalesManagedBean implements Serializable {
          }
         
     }
-     
+    
+     public void seleccionarEditable(Animal animal){
+        animalAsignar = animal;
+        agregarEditable();
+    }
+    
+     public void agregarEditable (){
+        PrimeFaces.current().dialog().closeDynamic(animalAsignar);
+    }
+    
     public void agregar (){
         PrimeFaces.current().dialog().closeDynamic(animalesAsignar);
     }

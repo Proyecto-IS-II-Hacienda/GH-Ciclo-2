@@ -20,16 +20,9 @@
                     <h:outputLabel value="#{ani.tipodeanimal.tipodeanimalPK.nombrecomun}"></h:outputLabel>
                 </p:column>
                  <p:column headerText="Seleccionar">
-                     <p:selectBooleanCheckbox value="#{animalesManagedBean.seleccionado}" itemLabel="Seleccionar">
-                         <p:ajax listener="#{animalesManagedBean.seleccionar(ani)}"/>
-                     </p:selectBooleanCheckbox>
+                     <p:commandButton icon="ui-icon-check" action="#{animalesManagedBean.seleccionar(ani)}"></p:commandButton>
                  </p:column>
             </p:dataTable>
-             <p:panelGrid columns="1">
-                 <p:commandButton icon="ui-icon-check" action="#{animalesManagedBean.agregar()}"></p:commandButton>
-                 
-             </p:panelGrid>
         </h:form>
     </h:body>
 </html>
-

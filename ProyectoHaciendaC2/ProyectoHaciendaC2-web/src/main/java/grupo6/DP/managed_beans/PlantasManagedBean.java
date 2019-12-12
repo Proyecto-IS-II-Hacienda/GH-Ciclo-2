@@ -28,6 +28,7 @@ public class PlantasManagedBean implements Serializable {
     private List <Planta> plantasList;
     private List <Planta> plantasAsignar;
     private List <Planta> temp;
+    private Planta plantaAsignar;
     private boolean seleccionado;
 
     /**
@@ -42,6 +43,8 @@ public class PlantasManagedBean implements Serializable {
         plantasList=plantaFacadeLocal.findAll();
         temp=new ArrayList();
         plantasAsignar=temp;
+        plantaAsignar=null;
+        
     }
 
     
@@ -69,6 +72,15 @@ public class PlantasManagedBean implements Serializable {
          }else{
              //plantasAsignar.remove(planta);
          }
+    }
+    
+    public void seleccionarEditable(Planta planta){
+        plantaAsignar = planta;
+        agregarEditable();
+    }
+    
+     public void agregarEditable (){
+        PrimeFaces.current().dialog().closeDynamic(plantasAsignar);
     }
     
      public void agregar (){
